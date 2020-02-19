@@ -1,6 +1,8 @@
-# Developers&#39; Guide
-
-## Overview
+<details>
+  <summary>How to collaborate to this project?</summary>
+  
+  # Developers&#39; Guide
+  ## Overview
 
 This document is intended to acquaint developers with the conventions and standards used in the **MasterLance** platform. New and existing developers should be intimately familiar with and regularly visit this document.
 
