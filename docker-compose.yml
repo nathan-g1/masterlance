@@ -9,10 +9,12 @@ services:
       - account
       - customer
       - transaction
+      - core
     depends_on:
       - account
       - customer
       - transaction
+      - core
     volumes:
       - ./services/facade:/usr/src/app
   customer:
