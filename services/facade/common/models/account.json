@@ -1,0 +1,82 @@
+{
+  "name": "Account",
+  "base": "Model",
+  "idInjection": false,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "accountNumber": {
+      "type": "string",
+      "id": true,
+      "required": true
+    },
+    "customerNumber": {
+      "type": "string",
+      "required": true
+    },
+    "balance": {
+      "type": "number",
+      "required": true
+    },
+    "transactions": {
+      "type": [
+        "object"
+      ],
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {
+    "getAccount": {
+      "description": "Get the account for the given account number.",
+      "http": {
+        "path": "/:accountNumber",
+        "verb": "get"
+      },
+      "accepts": {
+          "arg": "accountNumber",
+          "type": "string",
+          "required": true,
+          "description": "The account number. (Eg. CHK52321122)",
+          "http": {"source": "path"}
+      },
+      "returns": {
+        "arg": "account",
+        "type": "Account",
+        "root": true,
+        "description": "The account"
+      }
+    },
+    "getAccountSummary": {
+      "description": "Get a summary of the recent transactions and other account/customer information.",
+      "http": {
+        "path": "/summary",
+        "verb": "get"
+      },
+      "accepts": [
+        {
+          "arg": "accountNumber",
+          "type": "string",
+          "required": true,
+          "description": "The account number for the summary",
+          "http": {"source": "query"}
+        },
+        {
+          "arg": "cache",
+          "type": "boolean",
+          "description": "Enable the cache. Cache enabled by default.",
+          "http": {"source": "query"}
+        }
+      ],
+      "returns": {
+        "arg": "summary",
+        "type": "object",
+        "root": true,
+        "description": "The account summary"
+      }
+    }
+  }
+}

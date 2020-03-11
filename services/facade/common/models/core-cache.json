@@ -1,0 +1,9 @@
+{
+  "name": "CoreCache",
+  "base": "KeyValueModel",
+  "properties": {},
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

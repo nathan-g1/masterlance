@@ -1,0 +1,56 @@
+{
+  "_meta": {
+    "sources": [
+      "loopback/common/models",
+      "loopback/server/models",
+      "../common/models",
+      "./models"
+    ],
+    "mixins": [
+      "loopback/common/mixins",
+      "loopback/server/mixins",
+      "../common/mixins",
+      "./mixins"
+    ]
+  },
+  "Account": {
+    "dataSource": "account",
+    "public": true
+  },
+  "Cache": {
+    "dataSource": "shared-cache",
+    "public": false
+  },
+  "AccountCache": {
+    "dataSource": "private-cache",
+    "public": false
+  },
+  "Customer": {
+    "dataSource": "customer",
+    "public": false
+  },
+  "CustomerCache": {
+    "dataSource": "private-cache",
+    "public": false
+  },
+  "Transaction": {
+    "dataSource": "transaction",
+    "public": false
+  },
+  "Core": {
+    "dataSource": "core",
+    "public": false
+  },
+  "TransactionCache": {
+    "dataSource": "private-cache",
+    "public": false
+  },
+  "CoreCache": {
+    "dataSource": "private-cache",
+    "public": false
+  },
+  "Vital": {
+    "dataSource": null,
+    "public": true
+  }
+}

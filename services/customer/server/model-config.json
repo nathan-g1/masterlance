@@ -1,0 +1,28 @@
+{
+  "_meta": {
+    "sources": [
+      "loopback/common/models",
+      "loopback/server/models",
+      "../common/models",
+      "./models"
+    ],
+    "mixins": [
+      "loopback/common/mixins",
+      "loopback/server/mixins",
+      "../common/mixins",
+      "./mixins"
+    ]
+  },
+  "Customer": {
+    "dataSource": "CustomerDB",
+    "public": true
+  },
+  "Address": {
+    "dataSource": "CustomerDB",
+    "public": true
+  },
+  "Vital": {
+    "dataSource": null,
+    "public": true
+  }
+}

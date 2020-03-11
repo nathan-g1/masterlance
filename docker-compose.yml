@@ -1,0 +1,51 @@
+version: '3'
+services:
+  facade:
+    build: ./services/facade
+    image: loopback-example-facade/facade
+    ports:
+      - "3000:80"
+    links:
+      - account
+      - customer
+      - transaction
+    depends_on:
+      - account
+      - customer
+      - transaction
+    volumes:
+      - ./services/facade:/usr/src/app
+  customer:
+    build: ./services/customer
+    image: loopback-example-facade/customer-service
+    ports:
+      - "3001:80"
+    volumes:
+      - ./services/customer:/usr/src/app
+  account:
+    build: ./services/account
+    image: loopback-example-facade/account-service
+    ports:
+      - "3002:80"
+    volumes:
+      - ./services/account:/usr/src/app
+  transaction:
+    build: ./services/transaction
+    image: loopback-example-facade/transaction
+    ports:
+      - "3003:80"
+    volumes:
+      - ./services/transaction:/usr/src/app
+  core:
+    build: ./services/core
+    image: loopback-example-facade/core
+    ports:
+      - "3004:80"
+    volumes:
+      - ./services/core:/usr/src/app
+  mongo:
+    image: mongo
+    volumes:
+      - /usr/local/var/mongodb:/data/db
+    ports:
+      - "27017:27017"
