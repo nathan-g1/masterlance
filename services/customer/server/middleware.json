@@ -9,7 +9,7 @@
     "compression": {},
     "cors": {
       "params": {
-        "origin": true
+        "origin": "*"
       }
     },
     "helmet#xssFilter": {},

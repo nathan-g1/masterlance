@@ -35,6 +35,15 @@
       "ttl": 60000
     }
   },
+  "auth": {
+    "name": "auth",
+    "connector": "swagger",
+    "spec": "http://auth/explorer/swagger.json",
+    "cache": {
+      "model": "AuthCache",
+      "ttl": 60000
+    }
+  },
   "shared-cache": {
     "name": "shared-cache",
     "connector": "kv-memory"

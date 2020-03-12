@@ -49,6 +49,10 @@
     "dataSource": "private-cache",
     "public": false
   },
+  "AuthCache": {
+    "dataSource": "private-cache",
+    "public": false
+  },
   "Vital": {
     "dataSource": null,
     "public": true

@@ -45,6 +45,13 @@ services:
       - "3004:80"
     volumes:
       - ./services/core:/usr/src/app
+  auth:
+    build: ./services/auth
+    image: loopback-example-facade/auth
+    ports:
+      - "3005:80"
+    volumes:
+      - ./services/auth:/usr/src/app
   mongo:
     image: mongo
     volumes:
