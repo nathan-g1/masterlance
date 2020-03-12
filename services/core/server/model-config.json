@@ -20,5 +20,9 @@
   "Skill": {
     "dataSource": null,
     "public": true
+  },
+  "Activity": {
+    "dataSource": null,
+    "public": true
   }
 }
