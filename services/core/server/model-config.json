@@ -28,5 +28,9 @@
   "JobDuration": {
     "dataSource": null,
     "public": true
+  },
+  "Job": {
+    "dataSource": null,
+    "public": true
   }
 }
