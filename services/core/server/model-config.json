@@ -16,5 +16,9 @@
   "Vital": {
     "dataSource": null,
     "public": true
+  },
+  "Skill": {
+    "dataSource": null,
+    "public": true
   }
 }
