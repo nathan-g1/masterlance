@@ -6,38 +6,40 @@ services:
     ports:
       - "3000:80"
     links:
-      - account
-      - customer
-      - transaction
+      # - account
+      # - customer
+      # - transaction
       - core
+      - auth
     depends_on:
-      - account
-      - customer
-      - transaction
+      # - account
+      # - customer
+      # - transaction
       - core
+      - auth
     volumes:
       - ./services/facade:/usr/src/app
-  customer:
-    build: ./services/customer
-    image: loopback-example-facade/customer-service
-    ports:
-      - "3001:80"
-    volumes:
-      - ./services/customer:/usr/src/app
-  account:
-    build: ./services/account
-    image: loopback-example-facade/account-service
-    ports:
-      - "3002:80"
-    volumes:
-      - ./services/account:/usr/src/app
-  transaction:
-    build: ./services/transaction
-    image: loopback-example-facade/transaction
-    ports:
-      - "3003:80"
-    volumes:
-      - ./services/transaction:/usr/src/app
+  # customer:
+  #   build: ./services/customer
+  #   image: loopback-example-facade/customer-service
+  #   ports:
+  #     - "3001:80"
+  #   volumes:9
+  #     - ./services/customer:/usr/src/app
+  # account:
+  #   build: ./services/account
+  #   image: loopback-example-facade/account-service
+  #   ports:
+  #     - "3002:80"
+  #   volumes:
+  #     - ./services/account:/usr/src/app
+  # transaction:
+  #   build: ./services/transaction
+  #   image: loopback-example-facade/transaction
+  #   ports:
+  #     - "3003:80"
+  #   volumes:
+  #     - ./services/transaction:/usr/src/app
   core:
     build: ./services/core
     image: loopback-example-facade/core
@@ -45,6 +47,10 @@ services:
       - "3004:80"
     volumes:
       - ./services/core:/usr/src/app
+    depends_on:
+      - core-db
+    links:
+      - core-db
   auth:
     build: ./services/auth
     image: loopback-example-facade/auth
@@ -52,9 +58,31 @@ services:
       - "3005:80"
     volumes:
       - ./services/auth:/usr/src/app
-  mongo:
+    depends_on:
+      - auth-db
+    links:
+      - auth-db
+  auth-db:
     image: mongo
     volumes:
-      - /usr/local/var/mongodb:/data/db
+      - ./data/auth-db:/data/db
     ports:
-      - "27017:27017"
+      - "27018:27017"
+  im-db:
+    image: mongo
+    volumes:
+      - ./data/im-db:/data/db
+    ports:
+      - "27019:27017"
+  payment-db:
+    image: mongo
+    volumes:
+      - ./data/payment-db:/data/db
+    ports:
+      - "27020:27017"
+  core-db:
+    image: mongo
+    volumes:
+      - ./data/core-db:/data/db
+    ports:
+      - "27021:27017"
