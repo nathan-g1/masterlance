@@ -32,5 +32,9 @@
   "Job": {
     "dataSource": null,
     "public": true
+  },
+  "Review": {
+    "dataSource": null,
+    "public": true
   }
 }
