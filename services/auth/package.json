@@ -19,6 +19,7 @@
     "loopback": "^3.0.0",
     "loopback-boot": "^2.6.5",
     "loopback-component-explorer": "^4.0.0",
+    "loopback-connector-mongodb": "^5.2.2",
     "loopback-connector-swagger": "^3.1.0",
     "morgan": "^1.7.0",
     "serve-favicon": "^2.0.1",
