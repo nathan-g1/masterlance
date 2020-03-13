@@ -36,5 +36,13 @@
   "Review": {
     "dataSource": null,
     "public": true
+  },
+  "Proposal": {
+    "dataSource": null,
+    "public": true
+  },
+  "Contract": {
+    "dataSource": null,
+    "public": true
   }
 }
