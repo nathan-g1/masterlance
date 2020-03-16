@@ -44,7 +44,7 @@ services:
     build: ./services/core
     image: loopback-example-facade/core
     ports:
-      - "3004:80"
+      - "3001:80"
     volumes:
       - ./services/core:/usr/src/app
     depends_on:
@@ -55,7 +55,7 @@ services:
     build: ./services/auth
     image: loopback-example-facade/auth
     ports:
-      - "3005:80"
+      - "3002:80"
     volumes:
       - ./services/auth:/usr/src/app
     depends_on:

@@ -4,8 +4,8 @@
     "connector": "memory"
   },
   "mongoService": {
-    "host": "core-db",
-    "port": 27018,
+    "host": "auth-db",
+    "port": 27017,
     "connector": "mongodb"
   }
 }
