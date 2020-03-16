@@ -32,5 +32,9 @@
   "Vital": {
     "dataSource": null,
     "public": true
+  },
+  "Job": {
+    "dataSource": "core",
+    "public": true
   }
 }
