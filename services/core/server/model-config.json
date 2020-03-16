@@ -14,35 +14,35 @@
     ]
   },
   "Vital": {
-    "dataSource": null,
+    "dataSource": "mongoService",
     "public": true
   },
   "Skill": {
-    "dataSource": null,
+    "dataSource": "mongoService",
     "public": true
   },
   "Activity": {
-    "dataSource": null,
+    "dataSource": "mongoService",
     "public": true
   },
   "JobDuration": {
-    "dataSource": null,
+    "dataSource": "mongoService",
     "public": true
   },
   "Job": {
-    "dataSource": null,
+    "dataSource": "mongoService",
     "public": true
   },
   "Review": {
-    "dataSource": null,
+    "dataSource": "mongoService",
     "public": true
   },
   "Proposal": {
-    "dataSource": null,
+    "dataSource": "mongoService",
     "public": true
   },
   "Contract": {
-    "dataSource": null,
+    "dataSource": "mongoService",
     "public": true
   }
 }
