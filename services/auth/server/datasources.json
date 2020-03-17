@@ -6,6 +6,7 @@
   "mongoService": {
     "host": "auth-db",
     "port": 27017,
+    "name": "mongoService",
     "connector": "mongodb"
   }
 }
