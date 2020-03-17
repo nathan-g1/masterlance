@@ -46,5 +46,9 @@
   "Moderator": {
     "dataSource": "mongoService",
     "public": true
+  },
+  "Client": {
+    "dataSource": "mongoService",
+    "public": true
   }
 }
