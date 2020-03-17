@@ -1,0 +1,46 @@
+{
+  "name": "Job",
+  "plural": "jobs",
+  "base": "Model",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "price": {
+      "type": "number"
+    },
+    "description": {
+      "type": "string"
+    },
+    "noOfFreelancersNeeded": {
+      "type": "number"
+    },
+    "createdAt": {
+      "type": "date"
+    },
+    "isApproved": {
+      "type": "boolean"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {
+    "all": {
+      "accepts": null,
+      "returns": {
+        "root": true,
+        "description": "all jobs"
+      },
+      "description": "Get all jobs",
+      "http": {
+        "path": "/all",
+        "verb": "get"
+      }
+    }
+  }
+}

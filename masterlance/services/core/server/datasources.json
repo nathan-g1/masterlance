@@ -1,0 +1,7 @@
+{
+    "mongoService": {
+        "host": "core-db",
+        "port": 27017,
+        "connector": "mongodb"
+    }
+}

@@ -1,0 +1,40 @@
+{
+  "_meta": {
+    "sources": [
+      "loopback/common/models",
+      "loopback/server/models",
+      "../common/models",
+      "./models"
+    ],
+    "mixins": [
+      "loopback/common/mixins",
+      "loopback/server/mixins",
+      "../common/mixins",
+      "./mixins"
+    ]
+  },
+  "Cache": {
+    "dataSource": "shared-cache",
+    "public": false
+  },
+  "Core": {
+    "dataSource": "core",
+    "public": false
+  },
+  "CoreCache": {
+    "dataSource": "private-cache",
+    "public": false
+  },
+  "AuthCache": {
+    "dataSource": "private-cache",
+    "public": false
+  },
+  "Vital": {
+    "dataSource": null,
+    "public": true
+  },
+  "Job": {
+    "dataSource": "core",
+    "public": true
+  }
+}

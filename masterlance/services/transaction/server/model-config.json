@@ -1,0 +1,28 @@
+{
+  "_meta": {
+    "sources": [
+      "loopback/common/models",
+      "loopback/server/models",
+      "../common/models",
+      "./models"
+    ],
+    "mixins": [
+      "loopback/common/mixins",
+      "loopback/server/mixins",
+      "../common/mixins",
+      "./mixins"
+    ]
+  },
+  "Transaction": {
+    "dataSource": "TransactionDB",
+    "public": true
+  },
+  "Vital": {
+    "dataSource": null,
+    "public": true
+  },
+  "Cheque": {
+    "dataSource": "mongoService",
+    "public": true
+  }
+}

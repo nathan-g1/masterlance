@@ -1,0 +1,48 @@
+{
+  "_meta": {
+    "sources": [
+      "loopback/common/models",
+      "loopback/server/models",
+      "../common/models",
+      "./models"
+    ],
+    "mixins": [
+      "loopback/common/mixins",
+      "loopback/server/mixins",
+      "../common/mixins",
+      "./mixins"
+    ]
+  },
+  "Vital": {
+    "dataSource": "mongoService",
+    "public": true
+  },
+  "Skill": {
+    "dataSource": "mongoService",
+    "public": true
+  },
+  "Activity": {
+    "dataSource": "mongoService",
+    "public": true
+  },
+  "JobDuration": {
+    "dataSource": "mongoService",
+    "public": true
+  },
+  "Job": {
+    "dataSource": "mongoService",
+    "public": true
+  },
+  "Review": {
+    "dataSource": "mongoService",
+    "public": true
+  },
+  "Proposal": {
+    "dataSource": "mongoService",
+    "public": true
+  },
+  "Contract": {
+    "dataSource": "mongoService",
+    "public": true
+  }
+}

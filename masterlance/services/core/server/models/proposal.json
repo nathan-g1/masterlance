@@ -1,0 +1,26 @@
+{
+  "name": "Proposal",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "body": {
+      "type": "string"
+    },
+    "price": {
+      "type": "number"
+    },
+    "duration": {
+      "type": "object"
+    },
+    "numberOfMilestones": {
+      "type": "number"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

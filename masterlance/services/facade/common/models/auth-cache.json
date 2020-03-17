@@ -1,0 +1,9 @@
+{
+  "name": "AuthCache",
+  "base": "KeyValueModel",
+  "properties": {},
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
