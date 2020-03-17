@@ -38,5 +38,9 @@
   "Vital": {
     "dataSource": null,
     "public": true
+  },
+  "Freelancer": {
+    "dataSource": "mongoService",
+    "public": true
   }
 }
