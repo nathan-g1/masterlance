@@ -42,5 +42,9 @@
   "Freelancer": {
     "dataSource": "mongoService",
     "public": true
+  },
+  "Moderator": {
+    "dataSource": "mongoService",
+    "public": true
   }
 }
