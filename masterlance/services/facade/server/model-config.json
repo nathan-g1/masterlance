@@ -36,5 +36,9 @@
   "Job": {
     "dataSource": "core",
     "public": true
+  },
+  "AuthClient": {
+    "dataSource": "auth",
+    "public": true
   }
 }
