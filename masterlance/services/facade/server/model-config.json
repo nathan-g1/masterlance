@@ -40,5 +40,9 @@
   "AuthClient": {
     "dataSource": "auth",
     "public": true
+  },
+  "AuthFreelancer": {
+    "dataSource": "auth",
+    "public": true
   }
 }
