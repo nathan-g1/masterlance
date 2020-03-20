@@ -31,44 +31,45 @@
   "acls": [],
   "methods": {
     "getAccount": {
-      "description": "Get the account for the given account number.",
-      "http": {
-        "path": "/:accountNumber",
-        "verb": "get"
-      },
       "accepts": {
-          "arg": "accountNumber",
-          "type": "string",
-          "required": true,
-          "description": "The account number. (Eg. CHK52321122)",
-          "http": {"source": "path"}
+        "arg": "accountNumber",
+        "type": "string",
+        "required": true,
+        "description": "The account number. (Eg. CHK52321122)",
+        "http": {
+          "source": "path"
+        }
       },
       "returns": {
         "arg": "account",
         "type": "Account",
         "root": true,
         "description": "The account"
+      },
+      "description": "Get the account for the given account number.",
+      "http": {
+        "path": "/:accountNumber",
+        "verb": "get"
       }
     },
     "getAccountSummary": {
-      "description": "Get a summary of the recent transactions and other account/customer information.",
-      "http": {
-        "path": "/summary",
-        "verb": "get"
-      },
       "accepts": [
         {
           "arg": "accountNumber",
           "type": "string",
           "required": true,
           "description": "The account number for the summary",
-          "http": {"source": "query"}
+          "http": {
+            "source": "query"
+          }
         },
         {
           "arg": "cache",
           "type": "boolean",
           "description": "Enable the cache. Cache enabled by default.",
-          "http": {"source": "query"}
+          "http": {
+            "source": "query"
+          }
         }
       ],
       "returns": {
@@ -76,6 +77,11 @@
         "type": "object",
         "root": true,
         "description": "The account summary"
+      },
+      "description": "Get a summary of the recent transactions and other account/customer information.",
+      "http": {
+        "path": "/summary",
+        "verb": "get"
       }
     }
   }
