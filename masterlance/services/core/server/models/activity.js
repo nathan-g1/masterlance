@@ -1,5 +1,5 @@
-'use strict';
+'use strict'
 
-module.exports = function(Activity) {
+module.exports = function (Activity) {
 
-};
+}

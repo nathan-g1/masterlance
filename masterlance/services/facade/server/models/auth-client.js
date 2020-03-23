@@ -1,5 +1,5 @@
-'use strict';
+'use strict'
 
-module.exports = function(Authclient) {
+module.exports = function (Authclient) {
 
-};
+}

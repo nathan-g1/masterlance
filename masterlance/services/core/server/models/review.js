@@ -1,5 +1,5 @@
-'use strict';
+'use strict'
 
-module.exports = function(Review) {
+module.exports = function (Review) {
 
-};
+}
