@@ -8,14 +8,43 @@ module.exports = function (Authfreelancer) {
      * @param {Function(Error, object)} callback
      */
 
-    Authfreelancer.register = function (credentials, callback) {
+    Authfreelancer.register = function (
+        firstName,
+        lastName,
+        phoneNumber,
+        address,
+        dob,
+        email,
+        username,
+        password,
+        callback
+    ) {
+
         Authfreelancer.Freelancer_create({
-            data: credentials
+            data: {
+                firstName,
+                lastName,
+                phoneNumber,
+                address,
+                dob,
+                email,
+                username,
+                password
+            }
         }, (err, result) => {
             if (err)
                 callback(err.obj.error, null)
-            else
-                callback(null, result.get('obj'))
+            else {
+                const { username, email, id } = result.obj;
+                callback(null, {
+
+                    username,
+                    email,
+                    id
+                }
+                )
+            }
+
         });
 
     };

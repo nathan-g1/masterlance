@@ -14,10 +14,44 @@
     "register": {
       "accepts": [
         {
-          "arg": "credentials",
-          "type": "object",
-          "required": false,
-          "description": ""
+          "arg": "firstName",
+          "type": "string",
+          "required": true
+        },
+        {
+          "arg": "lastName",
+          "type": "string",
+          "required": true
+        },
+        {
+          "arg": "phoneNumber",
+          "type": "string",
+          "required": true
+        },
+        {
+          "arg": "address",
+          "type": "string",
+          "required": true
+        },
+        {
+          "arg": "dob",
+          "type": "date",
+          "required": true
+        },
+        {
+          "arg": "email",
+          "type": "string",
+          "required": true
+        },
+        {
+          "arg": "username",
+          "type": "string",
+          "required": true
+        },
+        {
+          "arg": "password",
+          "type": "string",
+          "required": true
         }
       ],
       "returns": [
