@@ -10,5 +10,31 @@
   "validations": [],
   "relations": {},
   "acls": [],
-  "methods": {}
+  "methods": {
+    "register": {
+      "accepts": [
+        {
+          "arg": "credentials",
+          "type": "object",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "returns": [
+        {
+          "arg": "result",
+          "type": "object",
+          "root": true,
+          "description": "success/failure result"
+        }
+      ],
+      "description": "register as freelancer",
+      "http": [
+        {
+          "path": "/register",
+          "verb": "post"
+        }
+      ]
+    }
+  }
 }

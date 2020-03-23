@@ -44,5 +44,9 @@
   "AuthFreelancer": {
     "dataSource": "auth",
     "public": true
+  },
+  "AuthModerator": {
+    "dataSource": "auth",
+    "public": true
   }
 }
