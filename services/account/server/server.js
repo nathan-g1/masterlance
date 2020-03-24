@@ -1,41 +1,40 @@
 // Copyright IBM Corp. 2017. All Rights Reserved.
 // Node module: loopback-example-facade
 
-'use strict';
+'use strict'
 
-var loopback = require('loopback');
-var boot = require('loopback-boot');
+var loopback = require('loopback')
+var boot = require('loopback-boot')
 
-var app = module.exports = loopback();
+var app = module.exports = loopback()
 
 // intentional delay to simulate slow microservice
 app.use((req, res, next) => {
-  setTimeout(next, 3000);
-});
+  setTimeout(next, 3000)
+})
 
 app.get('/vitals/docker', (req, res) => {
-  res.send('ok');
-});
+  res.send('ok')
+})
 
-app.start = function() {
+app.start = function () {
   // start the web server
-  return app.listen(function() {
-    app.emit('started');
-    var baseUrl = app.get('url').replace(/\/$/, '');
-    console.log('Web server listening at: %s', baseUrl);
+  return app.listen(function () {
+    app.emit('started')
+    var baseUrl = app.get('url').replace(/\/$/, '')
+    console.log('Web server listening at: %s', baseUrl)
     if (app.get('loopback-component-explorer')) {
-      var explorerPath = app.get('loopback-component-explorer').mountPath;
-      console.log('Browse your REST API at %s%s', baseUrl, explorerPath);
+      var explorerPath = app.get('loopback-component-explorer').mountPath
+      console.log('Browse your REST API at %s%s', baseUrl, explorerPath)
     }
-  });
-};
+  })
+}
 
 // Bootstrap the application, configure models, datasources and middleware.
 // Sub-apps like REST API are mounted via boot scripts.
-boot(app, __dirname, function(err) {
-  if (err) throw err;
+boot(app, __dirname, function (err) {
+  if (err) throw err
 
   // start the server if `$ node server.js`
-  if (require.main === module)
-    app.start();
-});
+  if (require.main === module) { app.start() }
+})

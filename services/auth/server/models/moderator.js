@@ -1,5 +1,5 @@
-'use strict';
+'use strict'
 
-module.exports = function(Moderator) {
+module.exports = function (Moderator) {
 
-};
+}

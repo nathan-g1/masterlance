@@ -1,5 +1,5 @@
 {
-  "name": "facade",
+  "name": "masterlance-backend-api-facade",
   "version": "1.0.0",
   "main": "server/server.js",
   "scripts": {

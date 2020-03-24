@@ -1,5 +1,5 @@
-'use strict';
+'use strict'
 
-module.exports = function(Proposal) {
+module.exports = function (Proposal) {
 
-};
+}

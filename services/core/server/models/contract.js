@@ -1,5 +1,5 @@
-'use strict';
+'use strict'
 
-module.exports = function(Contract) {
+module.exports = function (Contract) {
 
-};
+}
