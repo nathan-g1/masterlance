@@ -69,6 +69,35 @@
           "verb": "post"
         }
       ]
+    },
+    "login": {
+      "accepts": [
+        {
+          "arg": "username",
+          "type": "string",
+          "required": true
+        },
+        {
+          "arg": "password",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "returns": [
+        {
+          "arg": "result",
+          "type": "object",
+          "root": true,
+          "description": "object containing access-token"
+        }
+      ],
+      "description": "login as freelancer",
+      "http": [
+        {
+          "path": "/login",
+          "verb": "post"
+        }
+      ]
     }
   }
 }

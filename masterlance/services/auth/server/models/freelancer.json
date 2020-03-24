@@ -37,7 +37,7 @@
   "relations": {
     "accessTokens": {
       "type": "hasMany",
-      "model": "accessToken"
+      "model": "AccessToken"
     }
   },
   "acls": [],
