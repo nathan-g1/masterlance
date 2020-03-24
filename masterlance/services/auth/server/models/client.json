@@ -30,7 +30,12 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "accessTokens": {
+      "type": "hasMany",
+      "model": "AccessToken"
+    }
+  },
   "acls": [],
   "methods": {}
 }
