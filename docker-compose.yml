@@ -8,13 +8,13 @@ services:
     links:
       # - account
       # - customer
-      # - transaction
+      - transaction
       - core
       - auth
     depends_on:
       # - account
       # - customer
-      # - transaction
+      - transaction
       - core
       - auth
     volumes:
@@ -33,13 +33,17 @@ services:
   #     - "3002:80"
   #   volumes:
   #     - ./services/account:/usr/src/app
-  # transaction:
-  #   build: ./services/transaction
-  #   image: loopback-example-facade/transaction
-  #   ports:
-  #     - "3003:80"
-  #   volumes:
-  #     - ./services/transaction:/usr/src/app
+  transaction:
+    build: ./services/transaction
+    image: loopback-example-facade/transaction
+    ports:
+      - "3003:80"
+    volumes:
+      - ./services/transaction:/usr/src/app
+    depends_on:
+      - payment-db
+    links:
+      - payment-db
   core:
     build: ./services/core
     image: loopback-example-facade/core

@@ -1,0 +1,34 @@
+{
+  "name": "freelancer-profile",
+  "base": "Model",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {},
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {
+    "details": {
+      "accepts": [
+        { "arg": "freelancerId", "type": "string", "required": true }
+      ],
+      "returns": [
+        {
+          "arg": "result",
+          "type": "object",
+          "root": true,
+          "description": "the freelancer's profile details"
+        }
+      ],
+      "description": "fetch a freelancer's profile details",
+      "http": [
+        {
+          "path": "/details",
+          "verb": "get"
+        }
+      ]
+    }
+  }
+}

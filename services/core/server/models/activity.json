@@ -8,14 +8,22 @@
   },
   "properties": {
     "interviewing": {
-      "type": "number"
+      "type": "number",
+      "default": 0
     },
     "lastInterviewDate": {
-      "type": "date"
+      "type": "date",
+      "default": null
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "job": {
+      "type": "belongsTo",
+      "model": "Job",
+      "foreignKey": ""
+    }
+  },
   "acls": [],
   "methods": {}
 }

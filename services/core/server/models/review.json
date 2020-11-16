@@ -5,12 +5,23 @@
   "options": {
     "validateUpsert": true
   },
+  "mixins": {
+    "TimeStamp": true
+  },
   "properties": {
     "comment": {
       "type": "string"
     },
     "rate": {
       "type": "number"
+    },
+    "reviewerId": {
+      "type": "string",
+      "required": true
+    },
+    "reviewerRole": {
+      "type": "string",
+      "required": true
     }
   },
   "validations": [],

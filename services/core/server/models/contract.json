@@ -5,9 +5,18 @@
   "options": {
     "validateUpsert": true
   },
+  "mixins": {
+    "TimeStamp": true
+  },
   "properties": {},
   "validations": [],
-  "relations": {},
+  "relations": {
+    "proposal": {
+      "type": "hasOne",
+      "model": "Proposal",
+      "foreignKey": ""
+    }
+  },
   "acls": [],
   "methods": {}
 }

@@ -5,8 +5,9 @@
     "file": "data.json"
   },
   "mongoService": {
-    "host": "mongo",
+    "host": "payment-db",
     "port": 27017,
+    "name": "mongoService",
     "connector": "mongodb"
   }
 }

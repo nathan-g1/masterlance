@@ -24,5 +24,9 @@
   "Cheque": {
     "dataSource": "mongoService",
     "public": true
+  },
+  "Wallet": {
+    "dataSource": "mongoService",
+    "public": true
   }
 }

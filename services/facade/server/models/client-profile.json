@@ -1,0 +1,35 @@
+{
+  "name": "client-profile",
+  "plural": "client-profiles",
+  "base": "Model",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {},
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {
+    "details": {
+      "accepts": [
+        { "arg": "clientId", "type": "string", "required": true }
+      ],
+      "returns": [
+        {
+          "arg": "result",
+          "type": "object",
+          "root": true,
+          "description": "the client profile's details"
+        }
+      ],
+      "description": "fetch a client profile's details",
+      "http": [
+        {
+          "path": "/details",
+          "verb": "get"
+        }
+      ]
+    }
+  }
+}

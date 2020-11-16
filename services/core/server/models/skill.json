@@ -12,7 +12,13 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "jobs": {
+      "type": "hasAndBelongsToMany",
+      "model": "Job",
+      "foreignKey": ""
+    }
+  },
   "acls": [],
   "methods": {}
 }

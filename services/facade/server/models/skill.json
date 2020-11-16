@@ -1,0 +1,54 @@
+{
+  "name": "Skill",
+  "plural": "skills",
+  "base": "Model",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {},
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {
+    "fetchAllAvailableSkills": {
+      "accepts": [
+      ],
+      "returns": [
+        {
+          "arg": "result",
+          "root": true
+        }
+      ],
+      "description": "fetches all available skills (their IDs are important when posting jobs)",
+      "http": [
+        {
+          "path": "/fetchAllAvailableSkills",
+          "verb": "get"
+        }
+      ]
+    },
+    "searchForAvailableSkills": {
+      "accepts": [
+        {
+          "arg": "query",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "returns": [
+        {
+          "arg": "result",
+          "root": true
+        }
+      ],
+      "description": "search for a skill from all available skills (their IDs are important when posting jobs)",
+      "http": [
+        {
+          "path": "/searchForAvailableSkills",
+          "verb": "get"
+        }
+      ]
+    }
+  }
+}

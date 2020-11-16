@@ -1,0 +1,50 @@
+{
+  "name": "Wallet",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "userId": {
+      "type": "string",
+      "required": true
+    },
+    "activeBalance": {
+      "type": "number"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {
+    "getBalance": {
+      "accepts": [
+        {
+          "arg": "walletId",
+          "type": "string",
+          "required": true,
+          "description": "wallet ID",
+          "http": {
+            "source": "query"
+          }
+        }
+      ],
+      "returns": [
+        {
+          "arg": "balance",
+          "type": "object",
+          "root": true,
+          "description": "Active balance"
+        }
+      ],
+      "description": "Returns active balance for the account",
+      "http": [
+        {
+          "path": "/balance",
+          "verb": "get"
+        }
+      ]
+    }
+  }
+}

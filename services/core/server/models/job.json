@@ -5,28 +5,188 @@
   "options": {
     "validateUpsert": true
   },
+  "mixins": {
+    "TimeStamp": true
+  },
   "properties": {
     "title": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "price": {
-      "type": "number"
+      "type": "number",
+      "required": true
     },
     "description": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "noOfFreelancersNeeded": {
-      "type": "number"
-    },
-    "createdAt": {
-      "type": "date"
+      "type": "number",
+      "required": true
     },
     "isApproved": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": "false"
+    },
+    "postedBy": {
+      "type": "string",
+      "required": true
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "skillsRequired": {
+      "type": "hasAndBelongsToMany",
+      "model": "Skill",
+      "foreignKey": ""
+    },
+    "activities": {
+      "type": "hasOne",
+      "model": "Activity",
+      "foreignKey": ""
+    },
+    "duration": {
+      "type": "embedsOne",
+      "model": "JobDuration",
+      "foreignKey": ""
+    },
+    "proposals": {
+      "type": "hasMany",
+      "model": "Proposal",
+      "foreignKey": ""
+    },
+    "contracts": {
+      "type": "hasMany",
+      "model": "Contract",
+      "foreignKey": ""
+    },
+    "reviews": {
+      "type": "hasMany",
+      "model": "Review",
+      "foreignKey": ""
+    }
+  },
   "acls": [],
-  "methods": {}
+  "methods": {
+    "addSkills": {
+      "accepts": [
+        {
+          "arg": "jobId",
+          "type": "string",
+          "required": true
+        },
+        {
+          "arg": "skillsRequired",
+          "type": "array",
+          "required": true
+        }
+      ],
+      "returns": {
+        "root": true,
+        "description": ""
+      },
+      "description": "helps link skill and job models from outside (swagger)",
+      "http": null
+    },
+    "prototype.applyProposal": {
+      "accepts": [
+        {
+          "arg": "body",
+          "type": "string",
+          "required": true
+        },
+        {
+          "arg": "price",
+          "type": "number",
+          "required": true
+        },
+        {
+          "arg": "duration",
+          "type": "object",
+          "required": true
+        },
+        {
+          "arg": "numberOfMilestones",
+          "type": "number",
+          "required": true
+        },
+        {
+          "arg": "proposedBy",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "returns": {
+        "root": true,
+        "description": ""
+      },
+      "description": "helps link skill and job models from outside (swagger)",
+      "http": null
+    },
+    "postJob": {
+      "accepts": [
+        {
+          "arg": "title",
+          "type": "string",
+          "required": true
+        },
+        {
+          "arg": "price",
+          "type": "number",
+          "required": true
+        },
+        {
+          "arg": "description",
+          "type": "string",
+          "required": true
+        },
+        {
+          "arg": "noOfFreelancersNeeded",
+          "type": "number",
+          "required": true
+        },
+        {
+          "arg": "postedBy",
+          "type": "string",
+          "required": true
+        },
+        {
+          "arg": "duration",
+          "type": "any",
+          "required": true
+        }
+      ],
+      "returns": {
+        "root": true,
+        "description": "the job object created"
+      },
+      "description": "helps create job instances from outside (swagger)",
+      "http": null
+    },
+    "prototype.approve": {
+      "accepts": [],
+      "returns": {
+        "root": true,
+        "description": "the job object created"
+      },
+      "description": "helps create job instances from outside (swagger)",
+      "http": null
+    },
+    "prototype.acceptProposal": {
+      "accepts": [
+        {
+          "arg": "proposalId",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "returns": {
+        "root": true,
+        "description": ""
+      },
+      "description": "helps link skill and job models from outside (swagger)",
+      "http": null
+    }
+  }
 }

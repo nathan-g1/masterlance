@@ -1,0 +1,29 @@
+{
+  "name": "RoleResolver",
+  "plural": "role-resolver",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {},
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {
+    "resolveToken": {
+      "accepts": [
+        { "arg": "accessToken", "type": "string" }
+      ],
+      "returns": {
+        "root": true,
+        "description": "details about the user(including roles and permissions)"
+      },
+      "description": "",
+      "http": {
+        "path": "/resolve-token",
+        "verb": "post"
+      }
+    }
+  }
+}

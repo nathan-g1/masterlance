@@ -47,5 +47,9 @@
   "Client": {
     "dataSource": "mongoService",
     "public": true
+  },
+  "RoleResolver": {
+    "dataSource": "db",
+    "public": true
   }
 }

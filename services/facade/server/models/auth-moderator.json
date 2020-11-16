@@ -10,5 +10,114 @@
   "validations": [],
   "relations": {},
   "acls": [],
-  "methods": {}
+  "methods": {
+    "register": {
+      "accepts": [
+        {
+          "arg": "firstName",
+          "type": "string",
+          "required": true
+        },
+        {
+          "arg": "lastName",
+          "type": "string",
+          "required": true
+        },
+        {
+          "arg": "phoneNumber",
+          "type": "string",
+          "required": true
+        },
+        {
+          "arg": "address",
+          "type": "string",
+          "required": true
+        },
+        {
+          "arg": "dob",
+          "type": "date",
+          "required": true
+        },
+        {
+          "arg": "email",
+          "type": "string",
+          "required": true
+        },
+        {
+          "arg": "username",
+          "type": "string",
+          "required": true
+        },
+        {
+          "arg": "password",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "returns": [
+        {
+          "arg": "result",
+          "type": "object",
+          "root": true,
+          "description": "success/failure result"
+        }
+      ],
+      "description": "register as moderator",
+      "http": [
+        {
+          "path": "/register",
+          "verb": "post"
+        }
+      ]
+    },
+    "login": {
+      "accepts": [
+        {
+          "arg": "username",
+          "type": "string",
+          "required": true
+        },
+        {
+          "arg": "password",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "returns": [
+        {
+          "arg": "result",
+          "type": "object",
+          "root": true,
+          "description": "object containing access-token"
+        }
+      ],
+      "description": "login as moderator",
+      "http": [
+        {
+          "path": "/login",
+          "verb": "post"
+        }
+      ]
+    },
+    "logout": {
+      "accepts": [
+        { "arg": "access_token", "type": "string", "http": { "source": "query" } }
+      ],
+      "returns": [
+        {
+          "arg": "result",
+          "type": "object",
+          "root": true,
+          "description": "success/failure result"
+        }
+      ],
+      "description": "logout a moderator user",
+      "http": [
+        {
+          "path": "/logout",
+          "verb": "post"
+        }
+      ]
+    }
+  }
 }

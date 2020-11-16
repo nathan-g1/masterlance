@@ -2,11 +2,7 @@
   "core": {
     "name": "core",
     "connector": "swagger",
-    "spec": "http://core/explorer/swagger.json",
-    "cache": {
-      "model": "CoreCache",
-      "ttl": 60000
-    }
+    "spec": "http://core/explorer/swagger.json"
   },
   "auth": {
     "name": "auth",

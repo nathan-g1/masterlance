@@ -42,4 +42,39 @@ module.exports = function (Authfreelancer) {
       }
     })
   }
+
+  Authfreelancer.login = function (
+    username,
+    password,
+    callback
+  ) {
+    Authfreelancer.Freelancer_login({
+      credentials: {
+        username,
+        password
+      }
+
+    }, (err, result) => {
+      if (err) { callback(err.obj.error, null) } else {
+        callback(null, result.obj
+        )
+      }
+    })
+  }
+
+  Authfreelancer.logout = function (accessToken, callback) {
+    Authfreelancer.Freelancer_logout({
+      body: {
+        accessToken
+      }
+    }, (err, result) => {
+      if (err) {
+        callback(err.obj.error, null)
+      } else {
+        callback(null, {
+          success: true
+        })
+      }
+    })
+  }
 }

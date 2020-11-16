@@ -5,22 +5,35 @@
   "options": {
     "validateUpsert": true
   },
+  "mixins": {
+    "TimeStamp": true
+  },
   "properties": {
     "body": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "price": {
-      "type": "number"
-    },
-    "duration": {
-      "type": "object"
+      "type": "number",
+      "required": true
     },
     "numberOfMilestones": {
-      "type": "number"
+      "type": "number",
+      "required": true
+    },
+    "proposedBy": {
+      "type": "string",
+      "required": true
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "contract": {
+      "type": "belongsTo",
+      "model": "Contract",
+      "foreignKey": ""
+    }
+  },
   "acls": [],
   "methods": {}
 }

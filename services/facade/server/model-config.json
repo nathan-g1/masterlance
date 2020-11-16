@@ -48,5 +48,17 @@
   "AuthModerator": {
     "dataSource": "auth",
     "public": true
+  },
+  "client-profile": {
+    "dataSource": "auth",
+    "public": true
+  },
+  "freelancer-profile": {
+    "dataSource": "auth",
+    "public": true
+  },
+  "Skill": {
+    "dataSource": null,
+    "public": true
   }
 }
