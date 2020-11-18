@@ -1,7 +1,7 @@
 {
   "name": "Client",
   "plural": "clients",
-  "base": "User",
+  "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
@@ -30,12 +30,7 @@
     }
   },
   "validations": [],
-  "relations": {
-    "accessTokens": {
-      "type": "hasMany",
-      "model": "AccessToken"
-    }
-  },
+  "relations": {},
   "acls": [
     {
       "accessType": "*",
@@ -56,6 +51,12 @@
       "principalId": "theClient",
       "permission": "ALLOW",
       "property": "patchAttributes"
+    },
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW"
     }
   ],
   "methods": {}

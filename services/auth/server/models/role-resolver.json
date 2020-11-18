@@ -9,11 +9,21 @@
   "properties": {},
   "validations": [],
   "relations": {},
-  "acls": [],
+  "acls": [
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW"
+    }
+  ],
   "methods": {
     "resolveToken": {
       "accepts": [
-        { "arg": "accessToken", "type": "string" }
+        {
+          "arg": "accessToken",
+          "type": "string"
+        }
       ],
       "returns": {
         "root": true,

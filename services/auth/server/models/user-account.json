@@ -1,0 +1,243 @@
+{
+  "name": "UserAccount",
+  "base": "User",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "restrictionsLeft": {
+      "type": "number",
+      "required": true,
+      "default": 3
+    },
+    "firstName": {
+      "type": "string",
+      "required": true
+    },
+    "lastName": {
+      "type": "string",
+      "required": true
+    },
+    "phoneNumber": {
+      "type": "string",
+      "required": true
+    },
+    "address": {
+      "type": "string",
+      "required": true
+    },
+    "dob": {
+      "type": "date",
+      "required": true
+    },
+    "authAs": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "accessTokens": {
+      "type": "hasMany",
+      "model": "Session",
+      "foreignKey": "userId",
+      "options": {
+        "disableInclude": true
+      }
+    },
+    "clientprofile": {
+      "type": "hasOne",
+      "model": "Client",
+      "foreignKey": "",
+      "options": {
+        "nestRemoting": true
+      }
+    },
+    "freelancerprofile": {
+      "type": "hasOne",
+      "model": "Freelancer",
+      "foreignKey": "",
+      "options": {
+        "nestRemoting": true
+      }
+    },
+    "moderatorprofile": {
+      "type": "hasOne",
+      "model": "Moderator",
+      "foreignKey": "",
+      "options": {
+        "nestRemoting": true
+      }
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "findById"
+    },
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$unauthenticated",
+      "permission": "ALLOW",
+      "property": "registerClient"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$unauthenticated",
+      "permission": "ALLOW",
+      "property": "registerFreelancer"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$unauthenticated",
+      "permission": "ALLOW",
+      "property": "authenticate"
+    }
+  ],
+  "methods": {
+    "sessions": {
+      "accepts": [
+        {
+          "arg": "access_token",
+          "type": "string",
+          "http": {
+            "source": "query"
+          }
+        }
+      ],
+      "returns": {
+        "root": true,
+        "description": "return all active sessions"
+      },
+      "description": "",
+      "http": {
+        "path": "/sessions",
+        "verb": "get"
+      }
+    },
+    "authenticate": {
+      "accepts": [
+        { "arg": "phoneNumber", "type": "string" },
+        { "arg": "username", "type": "string" },
+        { "arg": "email", "type": "string" },
+        { "arg": "password", "type": "string" },
+        { "arg": "ipaddress", "type": "string" },
+        { "arg": "auth_as", "type": "string" }
+      ],
+      "returns": {
+        "root": true,
+        "description": "returns access token for the authenticated user"
+      },
+      "description": "authenticates a user",
+      "http": {
+        "path": "/authenticate",
+        "verb": "post"
+      }
+    },
+    "registerClient": {
+      "accepts": [
+        {
+          "arg": "firstName",
+          "type": "string"
+        },
+        {
+          "arg": "lastName",
+          "type": "string"
+        },
+        {
+          "arg": "phoneNumber",
+          "type": "string"
+        },
+        {
+          "arg": "address",
+          "type": "string"
+        },
+        {
+          "arg": "dob",
+          "type": "date"
+        },
+        {
+          "arg": "username",
+          "type": "string"
+        },
+        {
+          "arg": "email",
+          "type": "string"
+        },
+        {
+          "arg": "password",
+          "type": "string"
+        }
+      ],
+      "returns": {
+        "root": true,
+        "description": "information about the registered client"
+      },
+      "description": "register as a client",
+      "http": {
+        "path": "/register-client",
+        "verb": "post"
+      }
+    },
+    "registerFreelancer": {
+      "accepts": [
+        {
+          "arg": "firstName",
+          "type": "string"
+        },
+        {
+          "arg": "lastName",
+          "type": "string"
+        },
+        {
+          "arg": "phoneNumber",
+          "type": "string"
+        },
+        {
+          "arg": "address",
+          "type": "string"
+        },
+        {
+          "arg": "dob",
+          "type": "date"
+        },
+        {
+          "arg": "username",
+          "type": "string"
+        },
+        {
+          "arg": "email",
+          "type": "string"
+        }
+      ],
+      "returns": {
+        "root": true,
+        "description": "information about the registered freelancer"
+      },
+      "description": "register as a freelancer",
+      "http": {
+        "path": "/register-freelancer",
+        "verb": "post"
+      }
+    }
+  }
+}

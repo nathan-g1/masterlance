@@ -1,7 +1,7 @@
 {
   "name": "Moderator",
   "plural": "moderators",
-  "base": "User",
+  "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
@@ -25,18 +25,19 @@
     }
   },
   "validations": [],
-  "relations": {
-    "accessTokens": {
-      "type": "hasMany",
-      "model": "AccessToken"
-    }
-  },
+  "relations": {},
   "acls": [
     {
       "accessType": "*",
       "principalType": "ROLE",
       "principalId": "$everyone",
       "permission": "DENY"
+    },
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW"
     }
   ],
   "methods": {}

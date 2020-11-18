@@ -1,0 +1,20 @@
+{
+  "name": "Session",
+  "plural": "sessions",
+  "base": "AccessToken",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "ipAddress": {
+      "type": "string",
+      "required": false,
+      "default": "127.0.0.1"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
