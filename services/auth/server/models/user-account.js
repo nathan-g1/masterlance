@@ -117,6 +117,14 @@ module.exports = function (UserAccount) {
     );
   };
 
+  UserAccount.signout = function (accessToken, callback) {
+    if (!accessToken) {
+      return callback(new Error("not authenticated"), null);
+    }
+
+    UserAccount.logout(accessToken, callback);
+  };
+
   UserAccount.authenticate = function (
     phoneNumber,
     username,

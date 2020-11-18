@@ -37,23 +37,15 @@
     "dataSource": "core",
     "public": true
   },
-  "AuthClient": {
-    "dataSource": "auth",
-    "public": true
-  },
-  "AuthFreelancer": {
-    "dataSource": "auth",
-    "public": true
-  },
-  "AuthModerator": {
-    "dataSource": "auth",
-    "public": true
-  },
   "client-profile": {
     "dataSource": "auth",
     "public": true
   },
   "freelancer-profile": {
+    "dataSource": "auth",
+    "public": true
+  },
+  "UserAccount": {
     "dataSource": "auth",
     "public": true
   },

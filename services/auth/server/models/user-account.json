@@ -111,17 +111,22 @@
       "principalId": "$unauthenticated",
       "permission": "ALLOW",
       "property": "authenticate"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$unauthenticated",
+      "permission": "ALLOW",
+      "property": "signout"
     }
   ],
   "methods": {
     "sessions": {
       "accepts": [
         {
-          "arg": "access_token",
+          "arg": "accessToken",
           "type": "string",
-          "http": {
-            "source": "query"
-          }
+          "required": true
         }
       ],
       "returns": {
@@ -134,14 +139,32 @@
         "verb": "get"
       }
     },
+    "signout": {
+      "accepts": [
+        {
+          "arg": "accessToken",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "returns": {
+        "root": true,
+        "description": "return all active sessions"
+      },
+      "description": "",
+      "http": {
+        "path": "/signout",
+        "verb": "post"
+      }
+    },
     "authenticate": {
       "accepts": [
         { "arg": "phoneNumber", "type": "string" },
         { "arg": "username", "type": "string" },
         { "arg": "email", "type": "string" },
         { "arg": "password", "type": "string" },
-        { "arg": "ipaddress", "type": "string" },
-        { "arg": "auth_as", "type": "string" }
+        { "arg": "ipAddress", "type": "string" },
+        { "arg": "authAs", "type": "string" }
       ],
       "returns": {
         "root": true,
@@ -226,6 +249,10 @@
         },
         {
           "arg": "email",
+          "type": "string"
+        },
+        {
+          "arg": "password",
           "type": "string"
         }
       ],

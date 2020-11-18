@@ -7,11 +7,7 @@
   "auth": {
     "name": "auth",
     "connector": "swagger",
-    "spec": "http://auth/explorer/swagger.json",
-    "cache": {
-      "model": "AuthCache",
-      "ttl": 60000
-    }
+    "spec": "http://auth/explorer/swagger.json"
   },
   "shared-cache": {
     "name": "shared-cache",
