@@ -1,20 +1,16 @@
 {
   "name": "Transaction",
-  "idInjection": false,
+  "idInjection": true,
   "options": {
-    "validateUpsert": true
+    "validateUpsert": true,
+    "strictObjectIDCoercion": true
   },
   "properties": {
-    "TransactionId": {
-      "type": "string",
-      "id": true,
-      "required": true
-    },
     "dateTime": {
       "type": "date",
       "required": true
     },
-    "accountNo": {
+    "reason": {
       "type": "string",
       "required": true
     },
@@ -22,7 +18,19 @@
       "type": "number",
       "required": true
     },
-    "transactionType": {
+    "from": {
+      "type": "string",
+      "required": true
+    },
+    "to": {
+      "type": "string",
+      "required": true
+    },
+    "status": {
+      "type": "string",
+      "required": true
+    },
+    "type": {
       "type": "string",
       "required": true
     }
@@ -31,7 +39,75 @@
   "relations": {},
   "acls": [],
   "methods": {
-    "queryByAccount": {
+    "initiateTransaction": {
+      "accepts": [
+        {
+          "arg": "reason",
+          "type": "string",
+          "required": true,
+          "description": "transaction reason"
+        },
+        {
+          "arg": "amount",
+          "type": "number",
+          "required": true,
+          "description": "amount"
+        },
+        {
+          "arg": "from",
+          "type": "string",
+          "required": true,
+          "description": "source"
+        },
+        {
+          "arg": "to",
+          "type": "string",
+          "required": true,
+          "description": "destination"
+        }
+      ],
+      "returns": [
+        {
+          "arg": "transaction",
+          "type": "object",
+          "root": true,
+          "description": "transaction instance"
+        }
+      ],
+      "description": "create a transaction",
+      "http": [
+        {
+          "path": "/initiateTransaction",
+          "verb": "post"
+        }
+      ]
+    },
+    "verifyTransaction": {
+      "accepts": [
+        {
+          "arg": "params",
+          "type": "object",
+          "required": true,
+          "description": "yenepay transaction"
+        }
+      ],
+      "returns": [
+        {
+          "arg": "transaction",
+          "type": "object",
+          "root": true,
+          "description": "transaction instance"
+        }
+      ],
+      "description": "create a transaction",
+      "http": [
+        {
+          "path": "/verifyTransaction",
+          "verb": "post"
+        }
+      ]
+    },
+    "success": {
       "accepts": [
         {
           "arg": "accountNumber",
@@ -54,7 +130,91 @@
       "description": "list of transactions on the account",
       "http": [
         {
-          "path": "/account",
+          "path": "/success",
+          "verb": "get"
+        }
+      ]
+    },
+    "ipn": {
+      "accepts": [
+        {
+          "arg": "accountNumber",
+          "type": "string",
+          "required": true,
+          "description": "account number",
+          "http": {
+            "source": "query"
+          }
+        }
+      ],
+      "returns": [
+        {
+          "arg": "transactions",
+          "type": "object",
+          "root": true,
+          "description": "The transaction list"
+        }
+      ],
+      "description": "list of transactions on the account",
+      "http": [
+        {
+          "path": "/ipn",
+          "verb": "get"
+        }
+      ]
+    },
+    "cancel": {
+      "accepts": [
+        {
+          "arg": "accountNumber",
+          "type": "string",
+          "required": true,
+          "description": "account number",
+          "http": {
+            "source": "query"
+          }
+        }
+      ],
+      "returns": [
+        {
+          "arg": "transactions",
+          "type": "object",
+          "root": true,
+          "description": "The transaction list"
+        }
+      ],
+      "description": "list of transactions on the account",
+      "http": [
+        {
+          "path": "/cancel",
+          "verb": "get"
+        }
+      ]
+    },
+    "failure": {
+      "accepts": [
+        {
+          "arg": "accountNumber",
+          "type": "string",
+          "required": true,
+          "description": "account number",
+          "http": {
+            "source": "query"
+          }
+        }
+      ],
+      "returns": [
+        {
+          "arg": "transactions",
+          "type": "object",
+          "root": true,
+          "description": "The transaction list"
+        }
+      ],
+      "description": "list of transactions on the account",
+      "http": [
+        {
+          "path": "/failure",
           "verb": "get"
         }
       ]

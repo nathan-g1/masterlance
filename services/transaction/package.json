@@ -18,7 +18,8 @@
     "loopback-connector-mongodb": "^1.18.1",
     "morgan": "^1.7.0",
     "serve-favicon": "^2.0.1",
-    "strong-error-handler": "^1.0.1"
+    "strong-error-handler": "^1.0.1",
+    "yenepaysdk": "^1.1.6"
   },
   "devDependencies": {
     "eslint": "^2.13.1",

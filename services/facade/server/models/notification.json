@@ -1,0 +1,58 @@
+{
+    "name": "Notification",
+    "plural":"notifications",
+    "base": "Model",
+    "idInjection": true,
+    "options": {
+        "validateUpsert": true
+    },
+    "properties": {},
+    "validations": [],
+    "relations": {},
+    "acls": [],
+    "methods": {
+      "fetchNewNotifications": {
+        "accepts": [
+          {
+            "arg": "access_token",
+            "type": "string",
+            "required": true,
+            "http": {
+              "source": "query"
+            }
+          }
+        ],
+        "returns": {
+          "root": true,
+          "description": "return new notifications for user"
+        },
+        "description": "",
+        "http": {
+          "path": "/",
+          "verb": "get"
+        }
+      },
+      "markNotificationsSeen": {
+        "accepts": [
+          {
+            "arg": "access_token",
+            "type": "string",
+            "required": true,
+            "http": {
+              "source": "query"
+            }
+          }
+        ],
+        "returns": {
+          "root": true,
+          "description": "returns true"
+        },
+        "description": "",
+        "http": {
+          "path": "/markVisted",
+          "verb": "post"
+        }
+      }
+    }
+}
+  

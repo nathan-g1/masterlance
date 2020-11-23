@@ -1,17 +1,24 @@
 {
   "name": "Wallet",
   "base": "PersistedModel",
-  "idInjection": true,
+  "idInjection": false,
   "options": {
     "validateUpsert": true
   },
   "properties": {
     "userId": {
       "type": "string",
-      "required": true
+      "required": true,
+      "id": "true"
     },
     "activeBalance": {
       "type": "number"
+    },
+    "activeTopupTransaction": {
+      "type": "string"
+    },
+    "transactionUrl": {
+      "type": "string"
     }
   },
   "validations": [],
@@ -21,13 +28,10 @@
     "getBalance": {
       "accepts": [
         {
-          "arg": "walletId",
+          "arg": "userId",
           "type": "string",
           "required": true,
-          "description": "wallet ID",
-          "http": {
-            "source": "query"
-          }
+          "description": "User ID"
         }
       ],
       "returns": [
@@ -42,6 +46,93 @@
       "http": [
         {
           "path": "/balance",
+          "verb": "get"
+        }
+      ]
+    },
+    "cancelTransaction": {
+      "accepts": [
+        {
+          "arg": "userId",
+          "type": "string",
+          "required": true,
+          "description": "User ID"
+        }
+      ],
+      "returns": [
+        {
+          "arg": "result",
+          "type": "object",
+          "root": true,
+          "description": "result"
+        }
+      ],
+      "description": "Cancels a pending top-up transaction",
+      "http": [
+        {
+          "path": "/cancel-transaction",
+          "verb": "post"
+        }
+      ]
+    },
+    "topup": {
+      "accepts": [
+        {
+          "arg": "userId",
+          "type": "string",
+          "required": true,
+          "description": "User ID"
+        },
+        {
+          "arg": "amount",
+          "type": "number",
+          "required": true,
+          "description": "amount"
+        }
+      ],
+      "returns": [
+        {
+          "arg": "transaction",
+          "type": "object",
+          "root": true,
+          "description": "Topup Transaction"
+        }
+      ],
+      "description": "Returns a PENDING transaction",
+      "http": [
+        {
+          "path": "/topup",
+          "verb": "post"
+        }
+      ]
+    },
+    "fetchTransactions": {
+      "accepts": [
+        {
+          "arg": "userId",
+          "type": "string",
+          "required": true,
+          "description": "User ID"
+        },
+        {
+          "arg": "filters",
+          "type": "string",
+          "required": false,
+          "default": {}
+        }
+      ],
+      "returns": [
+        {
+          "arg": "transactions",
+          "type": "object",
+          "root": true,
+          "description": "transactions"
+        }
+      ],
+      "description": "Returns transactions for a wallet",
+      "http": [
+        {
+          "path": "/fetchTransactions",
           "verb": "get"
         }
       ]

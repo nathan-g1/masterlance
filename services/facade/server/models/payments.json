@@ -1,0 +1,130 @@
+{
+  "name": "Payment",
+  "plural": "payments",
+  "base": "Model",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [
+  ],
+  "methods": {
+    "getBalance": {
+      "accepts": [
+        {
+          "arg": "access_token",
+          "type": "string",
+          "required": true,
+          "http": {
+            "source": "query"
+          }
+        }
+      ],
+      "returns": {
+        "root": true,
+        "description": "Wallet Balance"
+      },
+      "description": "Get Wallet Balance",
+      "http": {
+        "path": "/get-balance",
+        "verb": "get"
+      }
+    },
+    "fetchTransactions": {
+      "accepts": [
+        {
+          "arg": "access_token",
+          "type": "string",
+          "required": true,
+          "http": {
+            "source": "query"
+          }
+        },
+        {
+          "arg": "filters",
+          "type": "object",
+          "required": false,
+          "default": {}
+        }
+      ],
+      "returns": {
+        "root": true,
+        "description": "Wallet Transactions"
+      },
+      "description": "Get Transaction records for a wallet",
+      "http": {
+        "path": "/transactions",
+        "verb": "get"
+      }
+    },
+    "cancelTransaction": {
+      "accepts": [
+        {
+          "arg": "access_token",
+          "type": "string",
+          "required": true,
+          "http": {
+            "source": "query"
+          }
+        }
+      ],
+      "returns": {
+        "root": true,
+        "description": "Wallet"
+      },
+      "description": "Cancel a pending top-up transaction in a wallet",
+      "http": {
+        "path": "/cancel-transaction",
+        "verb": "post"
+      }
+    },
+    "verify": {
+      "accepts": [
+        {
+          "arg": "params",
+          "type": "object",
+          "required": true
+        }
+      ],
+      "returns": {
+        "root": true,
+        "description": "result"
+      },
+      "description": "Verify a Transaction",
+      "http": {
+        "path": "/verify",
+        "verb": "post"
+      }
+    },
+    "topupWallet": {
+      "accepts": [
+        {
+          "arg": "access_token",
+          "type": "string",
+          "required": true,
+          "http": {
+            "source": "query"
+          }
+        },
+        {
+          "arg": "amount",
+          "type": "number",
+          "required": true
+        }
+      ],
+      "returns": {
+        "root": true,
+        "description": "Wallet Balance"
+      },
+      "description": "Get Wallet Balance",
+      "http": {
+        "path": "/topup",
+        "verb": "post"
+      }
+    }
+  }
+}

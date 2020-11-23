@@ -52,5 +52,13 @@
   "Skill": {
     "dataSource": null,
     "public": true
+  },
+  "Notification": {
+    "dataSource": "core",
+    "public": true
+  },
+  "Payment": {
+    "dataSource": "transaction",
+    "public": true
   }
 }

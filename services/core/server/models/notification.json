@@ -1,0 +1,48 @@
+{
+    "name": "Notification",
+    "plural": "notifications",
+    "base": "PersistedModel",
+    "idInjection": false,
+    "options": {
+      "validateUpsert": true,
+      "strictObjectIDCoercion": true
+    },
+    "properties": {
+      "title": {
+        "type": "string",
+        "required": true
+      },
+      "body": {
+        "type": "string",
+        "required": true
+      },
+      "dateTime": {
+        "type": "date",
+        "required": true,
+        "default": "$now"
+      },
+      "userId": {
+        "type": "string",
+        "required": true,
+        "id" : 2
+      },
+      "notificationId": {
+        "type": "string",
+        "id" : 1,
+        "generated": true
+      },
+      "visited": {
+        "type": "boolean",
+        "default": false
+      },
+      "action": {
+        "type": "string"
+      }
+    },
+    "validations": [],
+    "relations": {
+    },
+    "acls": [],
+    "methods": {}
+  }
+  

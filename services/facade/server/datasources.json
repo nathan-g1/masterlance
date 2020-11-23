@@ -9,6 +9,11 @@
     "connector": "swagger",
     "spec": "http://auth/explorer/swagger.json"
   },
+  "transaction": {
+    "name": "transaction",
+    "connector": "swagger",
+    "spec": "http://transaction/explorer/swagger.json"
+  },
   "shared-cache": {
     "name": "shared-cache",
     "connector": "kv-memory"

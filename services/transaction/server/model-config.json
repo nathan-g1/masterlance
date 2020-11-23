@@ -14,7 +14,7 @@
     ]
   },
   "Transaction": {
-    "dataSource": "TransactionDB",
+    "dataSource": "mongoService",
     "public": true
   },
   "Vital": {

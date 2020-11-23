@@ -7,6 +7,21 @@ module.exports = function (UserAccount) {
    * @param {Function(Error, object)} callback
    */
 
+  UserAccount.validateToken = function(
+    accessToken,
+    callback
+  ) {
+    UserAccount.UserAccount_validateToken({
+      accessToken
+    }, (err, result) => {
+      if (err) {
+        callback(err.obj.error, null);
+      } else {
+        callback(null, result.obj);
+      }
+    })
+  }
+
   UserAccount.login = function (
     phoneNumber,
     username,
@@ -76,7 +91,27 @@ module.exports = function (UserAccount) {
         if (err) {
           callback(err.obj.error, null);
         } else {
-          callback(null, result.obj);
+          const user = result.obj;
+          UserAccount.app.models.Payment.Wallet_create({
+            data: JSON.stringify({
+              "userId": user.userAccountId,
+              "activeBalance": 0
+            })
+          }, (err, _) => {
+            if (err) {
+              callback(err.obj.error, null);
+            } else {
+              UserAccount.app.models.Notification.Notification_create({
+                data: JSON.stringify({
+                  "title": "Welcome to Masterlance",
+                  "body": "Welcome to Masterlance! Take the site tour to learn how to use Masterlance.",
+                  "userId": user.userAccountId,
+                  "action": "/tour/client"
+                })
+              })
+              callback(null, user);
+            }
+          })
         }
       }
     );
@@ -108,7 +143,27 @@ module.exports = function (UserAccount) {
         if (err) {
           callback(err.obj.error, null);
         } else {
-          callback(null, result.obj);
+          const user = result.obj;
+          UserAccount.app.models.Payment.Wallet_create({
+            data: JSON.stringify({
+              "userId": user.userAccountId,
+              "activeBalance": 0
+            })
+          }, (err, _) => {
+            if (err) {
+              callback(err.obj.error, null);
+            } else {
+              UserAccount.app.models.Notification.Notification_create({
+                data: JSON.stringify({
+                  "title": "Welcome to Masterlance",
+                  "body": "Welcome to Masterlance! Take the site tour to learn how to use Masterlance.",
+                  "userId": user.userAccountId,
+                  "action": "/tour/freelancer"
+                })
+              })
+              callback(null, user);
+            }
+          })
         }
       }
     );

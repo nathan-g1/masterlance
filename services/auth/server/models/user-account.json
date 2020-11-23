@@ -118,6 +118,13 @@
       "principalId": "$unauthenticated",
       "permission": "ALLOW",
       "property": "signout"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$unauthenticated",
+      "permission": "ALLOW",
+      "property": "validateToken"
     }
   ],
   "methods": {
@@ -154,6 +161,20 @@
       "description": "",
       "http": {
         "path": "/signout",
+        "verb": "post"
+      }
+    },
+    "validateToken": {
+      "accepts": [
+        { "arg": "accessToken", "type": "string" }
+      ],
+      "returns": {
+        "root": true,
+        "description": "returns true if valid otherwise false"
+      },
+      "description": "validates an access token",
+      "http": {
+        "path": "/validate",
         "verb": "post"
       }
     },
