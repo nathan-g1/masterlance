@@ -11,22 +11,6 @@
       "type": "number",
       "required": true,
       "default": 3
-    },
-    "firstName": {
-      "type": "string",
-      "required": true
-    },
-    "lastName": {
-      "type": "string"
-    },
-    "phoneNumber": {
-      "type": "string"
-    },
-    "address": {
-      "type": "string"
-    },
-    "dob": {
-      "type": "date"
     }
   },
   "validations": [],

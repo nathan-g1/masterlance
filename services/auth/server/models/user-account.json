@@ -180,12 +180,9 @@
     },
     "authenticate": {
       "accepts": [
-        { "arg": "phoneNumber", "type": "string" },
-        { "arg": "username", "type": "string" },
         { "arg": "email", "type": "string" },
         { "arg": "password", "type": "string" },
-        { "arg": "ipAddress", "type": "string" },
-        { "arg": "authAs", "type": "string" }
+        { "arg": "ipAddress", "type": "string" }
       ],
       "returns": {
         "root": true,
@@ -194,96 +191,6 @@
       "description": "authenticates a user",
       "http": {
         "path": "/authenticate",
-        "verb": "post"
-      }
-    },
-    "registerClient": {
-      "accepts": [
-        {
-          "arg": "firstName",
-          "type": "string"
-        },
-        {
-          "arg": "lastName",
-          "type": "string"
-        },
-        {
-          "arg": "phoneNumber",
-          "type": "string"
-        },
-        {
-          "arg": "address",
-          "type": "string"
-        },
-        {
-          "arg": "dob",
-          "type": "date"
-        },
-        {
-          "arg": "username",
-          "type": "string"
-        },
-        {
-          "arg": "email",
-          "type": "string"
-        },
-        {
-          "arg": "password",
-          "type": "string"
-        }
-      ],
-      "returns": {
-        "root": true,
-        "description": "information about the registered client"
-      },
-      "description": "register as a client",
-      "http": {
-        "path": "/register-client",
-        "verb": "post"
-      }
-    },
-    "registerFreelancer": {
-      "accepts": [
-        {
-          "arg": "firstName",
-          "type": "string"
-        },
-        {
-          "arg": "lastName",
-          "type": "string"
-        },
-        {
-          "arg": "phoneNumber",
-          "type": "string"
-        },
-        {
-          "arg": "address",
-          "type": "string"
-        },
-        {
-          "arg": "dob",
-          "type": "date"
-        },
-        {
-          "arg": "username",
-          "type": "string"
-        },
-        {
-          "arg": "email",
-          "type": "string"
-        },
-        {
-          "arg": "password",
-          "type": "string"
-        }
-      ],
-      "returns": {
-        "root": true,
-        "description": "information about the registered freelancer"
-      },
-      "description": "register as a freelancer",
-      "http": {
-        "path": "/register-freelancer",
         "verb": "post"
       }
     }

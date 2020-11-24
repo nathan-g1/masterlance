@@ -1,11 +1,6 @@
 "use strict";
 
 module.exports = function (UserAccount) {
-  /**
-   * register as Client
-   * @param {object} credentials
-   * @param {Function(Error, object)} callback
-   */
 
   UserAccount.validateToken = function(
     accessToken,
@@ -21,23 +16,43 @@ module.exports = function (UserAccount) {
       }
     })
   }
+  
+  UserAccount.switchMode = function(
+    accessToken,
+    to,
+    callback
+  ) {
+    UserAccount.UserAccount_validateToken({
+      accessToken
+    }, (err, result) => {
+      if (err) {
+        callback(err.obj.error, null);
+      } else {
+        UserAccount.UserAccount_prototype_patchAttributes({
+          id: result.obj.userId,
+          data: JSON.stringify({
+            "authAs": to
+          })
+        }, (err, _) => {
+          if (err) callback(err.obj.error, null);
+          else callback(null, {
+            success: true
+          })
+        });
+      }
+    })
+  }
 
   UserAccount.login = function (
-    phoneNumber,
-    username,
     email,
     password,
-    authAs,
     callback
   ) {
     UserAccount.UserAccount_authenticate(
       {
-        phoneNumber,
-        username,
         email,
         password,
-        ipAddress: '0.0.0.0',
-        authAs,
+        ipAddress: '0.0.0.0'
       },
       (err, result) => {
         if (err) {
@@ -65,7 +80,7 @@ module.exports = function (UserAccount) {
     );
   };
 
-  UserAccount.registerClient = function (
+  UserAccount.register = function (
     firstName,
     lastName,
     phoneNumber,
@@ -74,100 +89,52 @@ module.exports = function (UserAccount) {
     username,
     email,
     password,
+    authAs,
     callback
   ) {
-    UserAccount.UserAccount_registerClient(
-      {
+    UserAccount.UserAccount_create({
+      data: JSON.stringify({
         firstName,
         lastName,
         phoneNumber,
         address,
         dob,
+        authAs,
         username,
         email,
-        password,
-      },
-      (err, result) => {
-        if (err) {
-          callback(err.obj.error, null);
-        } else {
-          const user = result.obj;
-          UserAccount.app.models.Payment.Wallet_create({
-            data: JSON.stringify({
-              "userId": user.userAccountId,
-              "activeBalance": 0
-            })
-          }, (err, _) => {
-            if (err) {
-              callback(err.obj.error, null);
-            } else {
-              UserAccount.app.models.Notification.Notification_create({
-                data: JSON.stringify({
-                  "title": "Welcome to Masterlance",
-                  "body": "Welcome to Masterlance! Take the site tour to learn how to use Masterlance.",
-                  "userId": user.userAccountId,
-                  "action": "/tour/client"
-                })
-              })
-              callback(null, user);
-            }
+        password
+      })
+    },
+    (err, result) => {
+      if (err) {
+        callback(err.obj.error, null);
+      } else {
+        const user = result.obj;
+        UserAccount.app.models.Payment.Wallet_create({
+          data: JSON.stringify({
+            "userId": user.id,
+            "activeBalance": 0
           })
-        }
+        }, (err, _) => {
+          if (err) {
+            callback(err.obj.error, null);
+          } else {
+            UserAccount.app.models.Notification.Notification_create({
+              data: JSON.stringify({
+                "title": "Welcome to Masterlance",
+                "body": "Welcome to Masterlance! Take the site tour to learn how to use Masterlance.",
+                "userId": user.id,
+                "action": "/tour"
+              })
+            })
+            callback(null, user);
+          }
+        })
       }
-    );
-  };
+    }
+  );
+};
 
-  UserAccount.registerFreelancer = function (
-    firstName,
-    lastName,
-    phoneNumber,
-    address,
-    dob,
-    username,
-    email,
-    password,
-    callback
-  ) {
-    UserAccount.UserAccount_registerFreelancer(
-      {
-        firstName,
-        lastName,
-        phoneNumber,
-        address,
-        dob,
-        username,
-        email,
-        password,
-      },
-      (err, result) => {
-        if (err) {
-          callback(err.obj.error, null);
-        } else {
-          const user = result.obj;
-          UserAccount.app.models.Payment.Wallet_create({
-            data: JSON.stringify({
-              "userId": user.userAccountId,
-              "activeBalance": 0
-            })
-          }, (err, _) => {
-            if (err) {
-              callback(err.obj.error, null);
-            } else {
-              UserAccount.app.models.Notification.Notification_create({
-                data: JSON.stringify({
-                  "title": "Welcome to Masterlance",
-                  "body": "Welcome to Masterlance! Take the site tour to learn how to use Masterlance.",
-                  "userId": user.userAccountId,
-                  "action": "/tour/freelancer"
-                })
-              })
-              callback(null, user);
-            }
-          })
-        }
-      }
-    );
-  };
 
   UserAccount.sessions = function (accessToken, callback) {
     UserAccount.UserAccount_sessions(
