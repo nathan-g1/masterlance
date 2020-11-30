@@ -4,12 +4,12 @@
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
-    "validateUpsert": true
+    "validateUpsert": true,
+    "strictObjectIDCoercion": true
   },
   "properties": {
     "restrictionsLeft": {
       "type": "number",
-      "required": true,
       "default": 3
     },
     "skillsIDs": {

@@ -29,6 +29,31 @@
           "verb": "get"
         }
       ]
+    },
+    "create": {
+      "accepts": [
+        {
+          "arg": "access_token",
+          "type": "string",
+          "required": true,
+          "http": {
+            "source": "query"
+          }
+        },
+        {
+          "arg": "skillsIDs",
+          "type": "array"
+        }
+      ],
+      "returns": {
+        "root": true,
+        "description": ""
+      },
+      "description": "create a new freelancer profile",
+      "http": {
+        "path": "/create",
+        "verb": "post"
+      }
     }
   }
 }
