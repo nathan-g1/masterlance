@@ -82,6 +82,42 @@
         }
       ]
     },
+    "createJobPostingTransaction": {
+      "accepts": [
+        {
+          "arg": "amount",
+          "type": "number",
+          "required": true,
+          "description": "amount"
+        },
+        {
+          "arg": "from",
+          "type": "string",
+          "required": true,
+          "description": "source"
+        },
+        {
+          "arg": "jobId",
+          "type": "string",
+          "description": "job id"
+        }
+      ],
+      "returns": [
+        {
+          "arg": "transaction",
+          "type": "object",
+          "root": true,
+          "description": "transaction instance"
+        }
+      ],
+      "description": "create a job-posted transaction and charge a wallet",
+      "http": [
+        {
+          "path": "/createJobPostingTransaction",
+          "verb": "post"
+        }
+      ]
+    },
     "verifyTransaction": {
       "accepts": [
         {

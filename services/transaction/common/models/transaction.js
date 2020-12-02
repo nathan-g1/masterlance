@@ -73,6 +73,42 @@ module.exports = function (Transaction) {
     // const url = ypco.checkout.GetCheckoutUrlForExpress(checkoutOptions, checkoutItem);
   };
 
+  Transaction.createJobPostingTransaction = function (
+    amount,
+    from,
+    jobId,
+    callback
+  ) {
+    Transaction.create(
+      {
+        dateTime: Date.now(),
+        reason: 'Job posted',
+        amount: amount,
+        from: from,
+        jobId: jobId,
+        to: 'system',
+        status: "COMPLETE",
+        type: 'JOB_POSTED'
+      },
+      (err, transaction) => {
+        if (err) callback(err)
+        else {
+          Transaction.app.models.Wallet.findById(from, (err, wallet) => {
+            if (err) {
+              callback(err)
+            } else {
+              wallet.activeBalance -= Number(amount)
+              wallet.save((err, _) => {
+                if (err) callback(err)
+                else callback(null, transaction)
+              })
+            }
+          })                
+        }
+      }
+    );
+  };
+
   Transaction.verifyTransaction = function (
     params,
     callback
@@ -82,8 +118,8 @@ module.exports = function (Transaction) {
     ypco.checkout.RequestPDT(pdtRequestModel).then((pdtJson) => {
       if(pdtJson.result === 'SUCCESS') {
         if (pdtJson.Status === 'Paid') {
-          console.log("success url called - Paid");
-          console.log(pdtJson)
+          // console.log("success url called - Paid");
+          // console.log(pdtJson)
           Transaction.findById(pdtJson.MerchantOrderId, (err, transaction) => {
             if (err) {
               callback(err)

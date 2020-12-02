@@ -95,7 +95,6 @@ module.exports = function (Wallet) {
               }
             }
           , (err, transactions) => {
-            console.log(err, transactions)
             if (err) callback(err)
             else {
               callback(null, transactions)

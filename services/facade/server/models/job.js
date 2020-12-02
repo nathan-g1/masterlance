@@ -31,56 +31,78 @@ module.exports = function (Job) {
     callback
   ) {
 
-    Job.app.models.AuthClient.RoleResolver_resolveToken(
-      {
-        accessToken
-      },
-      (err, data) => {
-        if (err) { callback(err.obj.error, null) } else {
-          const userData = data.obj
-          if (userData.clientId) {
-            if (userData.restrictionsLeft >= 1) {
-              Promise.all(
-                skillsRequired.map(skillId => Job.app.models.Job.Skill_findById({
-                  id: skillId
-                })
-                )).then(() => {
-                  Job.app.models.Job.Job_postJob({
-                    title,
-                    price,
-                    description,
-                    noOfFreelancersNeeded,
-                    postedBy: userData.clientId,
-                    duration: JSON.stringify(duration)
-                  }, (err, job) => {
-                    if (err) {
-                      callback(err.obj.error)
-                    } else {
-                      Job.app.models.Job.Job_addSkills({
-                        jobId: job.obj.id,
-                        skillsRequired
-                      }, (err, data) => {
-                        if (err) {
-                          callback(err.obj.error)
-                        } else {
-                          callback(null, job.obj)
-                        }
-                      })
-                    }
+    Job.app.models.UserAccount.validateToken(accessToken, (err, session) => {
+      if (err) return callback(err)
+      else if (session) {
+        const { user } = session
+        if (user.authAs === 'client') {
+          const { userId } = session
+          Job.app.models.Payment.Wallet_getBalance({
+            userId
+          }, (err, data) => {
+            if (err) callback(err.obj.error)
+            else {
 
+              const wallet = data.obj;
+
+              if (Number(price) <= Number(wallet.activeBalance) - 1) {
+                const profile = user.clientprofile;
+                if (profile.restrictionsLeft >= 1) {
+                  Promise.all(
+                    skillsRequired.map(skillId => Job.app.models.Job.Skill_findById({
+                      id: skillId
+                    })
+                  )).then(() => {
+                    Job.app.models.Job.Job_postJob({
+                      title,
+                      price,
+                      description,
+                      noOfFreelancersNeeded,
+                      postedBy: profile.id,
+                      duration: JSON.stringify(duration)
+                    }, (err, job) => {
+                      if (err) {
+                        callback(err.obj.error)
+                      } else {
+                        Job.app.models.Job.Job_addSkills({
+                          jobId: job.obj.id,
+                          skillsRequired
+                        }, (err, data) => {
+                          if (err) {
+                            callback(err.obj.error)
+                          } else {
+                            Job.app.models.Payment.Transaction_createJobPostingTransaction({
+                              amount: Number(price),
+                              from: userId,
+                              jobId: job.obj.id
+                            }, (err, data) => {
+                              if (err) callback(err.obj.error)
+                              else {
+                                callback(null, job.obj)
+                              }
+                            })
+                          }
+                        })
+                      }
+                    })
+                  }).catch(err => {
+                    callback(err.obj.error, null)
                   })
-                }).catch(err => {
-                  callback(err.obj.error, null)
-                })
-            } else {
-              callback(new Error('You have been restricted from posting jobs'), null)
+                } else {
+                  callback(new Error('You have been restricted from posting jobs'), null)
+                }
+              } else {
+                callback(new Error(`You don't have sufficient balance in your wallet account. please top-up balance over 'settings'.`))
+              }
+
             }
-          } else {
-            callback(new Error('You must be logged in as CLIENT role to post jobs'), null)
-          }
+          })
+
+        } else {
+          callback(new Error('You must be logged in as CLIENT to post jobs'), null)
         }
       }
-    )
+    })
   }
 
 
