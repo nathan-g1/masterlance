@@ -2,6 +2,10 @@
 
 module.exports = function (UserAccount) {
 
+  const MODERATOR_EMAIL_REGEX = /(.+)\@masterlance\.com/;
+
+  const isModeratorEmail = (email) => MODERATOR_EMAIL_REGEX.test(email)
+
   UserAccount.validateToken = function (
     accessToken,
     callback
@@ -16,10 +20,20 @@ module.exports = function (UserAccount) {
           }, (err, user) => {
             if (err) callback(err);
             else {
-              callback(null, {
-                ...session.toJSON(),
-                user
-              })
+              if (isModeratorEmail(user.email)) {
+                user.authAs = 'moderator'
+                user.save((err, user) => {
+                  callback(null, {
+                    ...session.toJSON(),
+                    user,
+                  })
+                })
+              } else {
+                callback(null, {
+                  ...session.toJSON(),
+                  user
+                })
+              }
             }
           })
         } else {
@@ -102,10 +116,20 @@ module.exports = function (UserAccount) {
                 }, (err, user) => {
                   if (err) callback(err);
                   else {
-                    callback(null, {
-                      ...session.toJSON(),
-                      user
-                    })
+                    if (isModeratorEmail(user.email)) {
+                      user.authAs = 'moderator'
+                      user.save((err, user) => {
+                        callback(null, {
+                          ...session.toJSON(),
+                          user,
+                        })
+                      })
+                    } else {
+                      callback(null, {
+                        ...session.toJSON(),
+                        user
+                      })
+                    }
                   }
                 })
               }

@@ -2,7 +2,11 @@
 
 module.exports = function (UserAccount) {
 
-  UserAccount.validateToken = function(
+  const MODERATOR_EMAIL_REGEX = /(.+)\@masterlance\.com/;
+
+  const isModeratorEmail = (email) => MODERATOR_EMAIL_REGEX.test(email)
+
+  UserAccount.validateToken = function (
     accessToken,
     callback
   ) {
@@ -16,8 +20,8 @@ module.exports = function (UserAccount) {
       }
     })
   }
-  
-  UserAccount.switchMode = function(
+
+  UserAccount.switchMode = function (
     accessToken,
     to,
     callback
@@ -28,17 +32,21 @@ module.exports = function (UserAccount) {
       if (err) {
         callback(err.obj.error, null);
       } else {
-        UserAccount.UserAccount_prototype_patchAttributes({
-          id: result.obj.userId,
-          data: JSON.stringify({
-            "authAs": to
-          })
-        }, (err, _) => {
-          if (err) callback(err.obj.error, null);
-          else callback(null, {
-            success: true
-          })
-        });
+        if (result.obj.user.authAs === 'moderator' || to === 'moderator') {
+          callback(new Error('Moderator role can\'t be switched.'))
+        } else {
+          UserAccount.UserAccount_prototype_patchAttributes({
+            id: result.obj.userId,
+            data: JSON.stringify({
+              "authAs": to
+            })
+          }, (err, _) => {
+            if (err) callback(err.obj.error, null);
+            else callback(null, {
+              success: true
+            })
+          });
+        }
       }
     })
   }
@@ -92,48 +100,53 @@ module.exports = function (UserAccount) {
     authAs,
     callback
   ) {
-    UserAccount.UserAccount_create({
-      data: JSON.stringify({
-        firstName,
-        lastName,
-        phoneNumber,
-        address,
-        dob,
-        authAs,
-        username,
-        email,
-        password
-      })
-    },
-    (err, result) => {
-      if (err) {
-        callback(err.obj.error, null);
-      } else {
-        const user = result.obj;
-        UserAccount.app.models.Payment.Wallet_create({
-          data: JSON.stringify({
-            "userId": user.id,
-            "activeBalance": 0
-          })
-        }, (err, _) => {
+
+    if (isModeratorEmail(email) || authAs === 'moderator') {
+      callback(new Error(`Can't register as moderator. Contact admins to create a moderator account.`))
+    } else {
+      UserAccount.UserAccount_create({
+        data: JSON.stringify({
+          firstName,
+          lastName,
+          phoneNumber,
+          address,
+          dob,
+          authAs,
+          username,
+          email,
+          password
+        })
+      },
+        (err, result) => {
           if (err) {
             callback(err.obj.error, null);
           } else {
-            UserAccount.app.models.Notification.Notification_create({
+            const user = result.obj;
+            UserAccount.app.models.Payment.Wallet_create({
               data: JSON.stringify({
-                "title": "Welcome to Masterlance",
-                "body": "Welcome to Masterlance! Take the site tour to learn how to use Masterlance.",
                 "userId": user.id,
-                "action": "/tour"
+                "activeBalance": 0
               })
+            }, (err, _) => {
+              if (err) {
+                callback(err.obj.error, null);
+              } else {
+                UserAccount.app.models.Notification.Notification_create({
+                  data: JSON.stringify({
+                    "title": "Welcome to Masterlance",
+                    "body": "Welcome to Masterlance! Take the site tour to learn how to use Masterlance.",
+                    "userId": user.id,
+                    "action": "/tour"
+                  })
+                })
+                callback(null, user);
+              }
             })
-            callback(null, user);
           }
-        })
-      }
+        }
+      );
     }
-  );
-};
+  };
 
 
   UserAccount.sessions = function (accessToken, callback) {
