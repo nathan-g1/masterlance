@@ -42,6 +42,27 @@
         "verb": "get"
       }
     },
+    "feed": {
+      "accepts": [
+        {
+          "arg": "access_token",
+          "type": "string",
+          "required": true,
+          "http": {
+            "source": "query"
+          }
+        }
+      ],
+      "returns": {
+        "root": true,
+        "description": "all jobs based on the freelancer's skills"
+      },
+      "description": "Get all skill-related jobs for a freelancer",
+      "http": {
+        "path": "/feed",
+        "verb": "get"
+      }
+    },
     "create": {
       "accepts": [
         {

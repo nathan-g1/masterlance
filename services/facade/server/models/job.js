@@ -20,6 +20,49 @@ module.exports = function (Job) {
     })
   }
 
+  Job.feed = function (accessToken, callback) {
+    Job.app.models.UserAccount.validateToken(accessToken, (err, session) => {
+      if (err) return callback(err)
+      else if (session) {
+        const { user } = session
+
+        if (user.authAs == 'freelancer' && user.freelancerprofile) {
+          Job.Job_find({
+            filter: JSON.stringify({
+              include: [
+                'skillsRequired',
+                {
+                  relation: 'activities',
+                  scope: {
+                    fields: ['lastInterviewDate', 'interviewing']
+                  }
+                }
+              ],
+              order: 'createdAt DESC'
+            })
+          }, (err, result) => {
+            if (err) { callback(err.obj.error, null) } else {
+              const jobs = result.obj.sort((jobA, jobB) => {
+                const skillsRequiredForJobA = jobA.skillsRequired.map(({ id }) => id)
+                const skillsRequiredForJobB = jobB.skillsRequired.map(({ id }) => id)
+                
+                const skillsRequiredForJobAIntersectionFreelancerSkills = skillsRequiredForJobA.filter(skillID => user.freelancerprofile.skillsIDs.includes(skillID))
+                const skillsRequiredForJobBIntersectionFreelancerSkills = skillsRequiredForJobB.filter(skillID => user.freelancerprofile.skillsIDs.includes(skillID))
+
+                return skillsRequiredForJobBIntersectionFreelancerSkills.length - skillsRequiredForJobAIntersectionFreelancerSkills.length
+              })
+
+              callback(null, jobs)
+            }
+          })
+
+        } else {
+          callback(new Error('you must be authenticated as a freelancer and have a profile'))
+        }
+      }
+    })
+  }
+
   Job.create = function (
     accessToken,
     title,
