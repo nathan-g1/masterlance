@@ -63,6 +63,27 @@
         "verb": "get"
       }
     },
+    "myJobs": {
+      "accepts": [
+        {
+          "arg": "access_token",
+          "type": "string",
+          "required": true,
+          "http": {
+            "source": "query"
+          }
+        }
+      ],
+      "returns": {
+        "root": true,
+        "description": "a list of all jobs created by a client"
+      },
+      "description": "fetch all jobs created by a client",
+      "http": {
+        "path": "/my-jobs",
+        "verb": "get"
+      }
+    },
     "create": {
       "accepts": [
         {

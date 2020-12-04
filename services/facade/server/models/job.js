@@ -63,6 +63,39 @@ module.exports = function (Job) {
     })
   }
 
+  Job.myJobs = function (accessToken, callback) {
+    Job.app.models.UserAccount.validateToken(accessToken, (err, session) => {
+      if (err) return callback(err)
+      else if (session) {
+        const { user } = session
+
+        if (user.authAs == 'client' && user.clientprofile) {
+          Job.Job_find({
+            filter: JSON.stringify({
+              include: [
+                'skillsRequired',
+                {
+                  relation: 'activities',
+                  scope: {
+                    fields: ['lastInterviewDate', 'interviewing']
+                  }
+                }
+              ],
+              order: 'createdAt DESC'
+            })
+          }, (err, result) => {
+            if (err) { callback(err.obj.error, null) } else {
+              callback(null, result.obj.filter(({ postedBy }) => user.clientprofile.id === postedBy))
+            }
+          })
+
+        } else {
+          callback(new Error('you must be authenticated as a client and have a profile'))
+        }
+      }
+    })
+  }
+
   Job.create = function (
     accessToken,
     title,
