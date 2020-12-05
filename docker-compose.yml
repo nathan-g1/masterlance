@@ -4,7 +4,7 @@ services:
     build: ./services/facade
     image: loopback-example-facade/facade
     ports:
-      - "3000:80"
+      - "3000:3000"
     links:
       # - account
       # - customer
@@ -41,7 +41,7 @@ services:
       - FRONTEND_URL=http://localhost:8080
       - SELLER_CODE=0123 # YOUR_YENEPAY_SELLER_CODE
     ports:
-      - "3003:80"
+      - "3003:3000"
     volumes:
       - ./services/transaction:/usr/src/app
     depends_on:
@@ -52,7 +52,7 @@ services:
     build: ./services/core
     image: loopback-example-facade/core
     ports:
-      - "3001:80"
+      - "3001:3000"
     volumes:
       - ./services/core:/usr/src/app
     depends_on:
@@ -63,7 +63,7 @@ services:
     build: ./services/auth
     image: loopback-example-facade/auth
     ports:
-      - "3002:80"
+      - "3002:3000"
     volumes:
       - ./services/auth:/usr/src/app
     depends_on:

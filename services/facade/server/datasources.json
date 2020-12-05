@@ -2,17 +2,17 @@
   "core": {
     "name": "core",
     "connector": "swagger",
-    "spec": "http://core/explorer/swagger.json"
+    "spec": "http://core:3000/explorer/swagger.json"
   },
   "auth": {
     "name": "auth",
     "connector": "swagger",
-    "spec": "http://auth/explorer/swagger.json"
+    "spec": "http://auth:3000/explorer/swagger.json"
   },
   "transaction": {
     "name": "transaction",
     "connector": "swagger",
-    "spec": "http://transaction/explorer/swagger.json"
+    "spec": "http://transaction:3000/explorer/swagger.json"
   },
   "shared-cache": {
     "name": "shared-cache",
