@@ -112,6 +112,19 @@ module.exports = function (Job) {
     })
   }
 
+
+  Job.prototype.denyApproval = function (callback) {
+
+    this.updateAttribute('isApproved', false, (err, data) => {
+      if (err) {
+        callback(err, null);
+      } else {
+        callback(null, this);
+      }
+    })
+  }
+
+
   Job.prototype.acceptProposal = function (proposalId, callback) {
 
     this.contracts.find((err, data) => {

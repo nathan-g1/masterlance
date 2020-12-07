@@ -25,7 +25,14 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "taskHistory": {
+      "type": "hasMany",
+      "model": "Task",
+      "options": {
+        "disableInclude": false
+      }
+  },
   "acls": [
     {
       "accessType": "*",

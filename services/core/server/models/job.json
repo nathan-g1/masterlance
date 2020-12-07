@@ -173,6 +173,15 @@
       "description": "helps create job instances from outside (swagger)",
       "http": null
     },
+    "prototype.denyApproval": {
+      "accepts": [],
+      "returns": {
+        "root": true,
+        "description": "the job object declined"
+      },
+      "description": "helps deny approval to a job instances from outside (swagger)",
+      "http": null
+    },
     "prototype.acceptProposal": {
       "accepts": [
         {

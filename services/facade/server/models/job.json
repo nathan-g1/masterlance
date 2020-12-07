@@ -231,6 +231,38 @@
         }
       ]
     },
+    "declineJob": {
+      "accepts": [
+        {
+          "arg": "access_token",
+          "type": "string",
+          "http": {
+            "source": "query"
+          }
+        },
+        {
+          "arg": "denial_message",
+          "type": "string",
+          "required": true
+        },
+        {
+          "arg": "jobId",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "returns": {
+        "root": true,
+        "description": ""
+      },
+      "description": "helps link skill and job models from outside (swagger)",
+      "http": [
+        {
+          "path": "/:jobId/denyApproval",
+          "verb": "post"
+        }
+      ]
+    },
     "proposals": {
       "accepts": [
         {

@@ -1,0 +1,40 @@
+{
+    "name": "Task",
+    "plural": "Tasks",
+    "base": "PersistedModel",
+    "idInjection": true,
+    "options": {
+      "validateUpsert": true
+    },
+    "properties": {
+        "jobId": {
+          "type": "string"
+        },
+        "message": {
+            "type": "string"
+        },
+        "action": {
+            "type": "string"
+        }
+    },
+    "validations": [],
+    "relations": {
+      
+    },
+    "acls": [
+      {
+        "accessType": "*",
+        "principalType": "ROLE",
+        "principalId": "$everyone",
+        "permission": "DENY"
+      },
+      {
+        "accessType": "EXECUTE",
+        "principalType": "ROLE",
+        "principalId": "$everyone",
+        "permission": "ALLOW"
+      }
+    ],
+    "methods": {}
+  }
+  

@@ -45,7 +45,7 @@ module.exports = function (Job) {
               const jobs = result.obj.sort((jobA, jobB) => {
                 const skillsRequiredForJobA = jobA.skillsRequired.map(({ id }) => id)
                 const skillsRequiredForJobB = jobB.skillsRequired.map(({ id }) => id)
-                
+
                 const skillsRequiredForJobAIntersectionFreelancerSkills = skillsRequiredForJobA.filter(skillID => user.freelancerprofile.skillsIDs.includes(skillID))
                 const skillsRequiredForJobBIntersectionFreelancerSkills = skillsRequiredForJobB.filter(skillID => user.freelancerprofile.skillsIDs.includes(skillID))
 
@@ -128,42 +128,42 @@ module.exports = function (Job) {
                     skillsRequired.map(skillId => Job.app.models.Job.Skill_findById({
                       id: skillId
                     })
-                  )).then(() => {
-                    Job.app.models.Job.Job_postJob({
-                      title,
-                      price,
-                      description,
-                      noOfFreelancersNeeded,
-                      postedBy: profile.id,
-                      duration: JSON.stringify(duration)
-                    }, (err, job) => {
-                      if (err) {
-                        callback(err.obj.error)
-                      } else {
-                        Job.app.models.Job.Job_addSkills({
-                          jobId: job.obj.id,
-                          skillsRequired
-                        }, (err, data) => {
-                          if (err) {
-                            callback(err.obj.error)
-                          } else {
-                            Job.app.models.Payment.Transaction_createJobPostingTransaction({
-                              amount: Number(price),
-                              from: userId,
-                              jobId: job.obj.id
-                            }, (err, data) => {
-                              if (err) callback(err.obj.error)
-                              else {
-                                callback(null, job.obj)
-                              }
-                            })
-                          }
-                        })
-                      }
+                    )).then(() => {
+                      Job.app.models.Job.Job_postJob({
+                        title,
+                        price,
+                        description,
+                        noOfFreelancersNeeded,
+                        postedBy: profile.id,
+                        duration: JSON.stringify(duration)
+                      }, (err, job) => {
+                        if (err) {
+                          callback(err.obj.error)
+                        } else {
+                          Job.app.models.Job.Job_addSkills({
+                            jobId: job.obj.id,
+                            skillsRequired
+                          }, (err, data) => {
+                            if (err) {
+                              callback(err.obj.error)
+                            } else {
+                              Job.app.models.Payment.Transaction_createJobPostingTransaction({
+                                amount: Number(price),
+                                from: userId,
+                                jobId: job.obj.id
+                              }, (err, data) => {
+                                if (err) callback(err.obj.error)
+                                else {
+                                  callback(null, job.obj)
+                                }
+                              })
+                            }
+                          })
+                        }
+                      })
+                    }).catch(err => {
+                      callback(err.obj.error, null)
                     })
-                  }).catch(err => {
-                    callback(err.obj.error, null)
-                  })
                 } else {
                   callback(new Error('You have been restricted from posting jobs'), null)
                 }
@@ -432,6 +432,92 @@ module.exports = function (Job) {
         }
       )
     }
+  }
+
+  Job.approveJob = function (accessToken, jobId, callback) {
+    Job.app.models.UserAccount.validateToken(accessToken, (err, session) => {
+      if (err) return callback(err)
+      else if (session) {
+        const { user } = session
+        if (user.authAs === 'moderator') {
+          const { userId, moderatorprofile } = session // ???
+          console.log(session)
+          Job.Job_prototype_approve({
+            id: jobId,
+          }, (err, data) => {
+            if (err) {
+              callback(err.obj.error, null);
+            } else {
+
+              Job.app.models.UserAccount.Moderator_prototype_create_taskHistory({
+                id: moderatorprofile.id,
+                data: JSON.stringify({
+                  jobId: jobId,
+                  message: "",
+                  action: 'APPROVE'
+                })
+              }, (err, data) => {
+                if (err) {
+                  callback(err.obj.error, null);
+                } else {
+                  callback(null, data.obj);
+                }
+              })
+              // callback(null, data.obj);
+            }
+          })
+
+
+
+        } else {
+          callback(new Error('You must be logged in as MODERATOR role to approve for this jobs'), null)
+        }
+      }
+    }
+    )
+  }
+
+
+  Job.declineJob = function (accessToken, jobId, denial_message, callback) {
+    Job.app.models.UserAccount.validateToken(accessToken, (err, session) => {
+      if (err) return callback(err)
+      else if (session) {
+        const { user } = session
+        if (user.authAs === 'moderator') {
+          const { userId } = session // ???
+          Job.Job_prototype_denyApproval({
+            id: jobId,
+            // denyBy: userId,
+            // denialMessage: denial_message
+          }, (err, data) => {
+            if (err) {
+              callback(err.obj.error, null);
+            } else {
+              callback(null, data.obj);
+            }
+          })
+
+          Job.app.models.Moderator.Moderator_prototype_create_taskHistory({
+            id: userId,
+            data: JSON.stringify({
+              jobId: jobId,
+              message: denial_message,
+              action: 'DENY'
+            })
+          }, (err, data) => {
+            if (err) {
+              callback(err.obj.error, null);
+            } else {
+              callback(null, data.obj);
+            }
+          })
+
+        } else {
+          callback(new Error('You must be logged in as MODERATOR role to deny approval for this jobs'), null)
+        }
+      }
+    }
+    )
   }
 }
 
