@@ -59,6 +59,16 @@ module.exports = function (Job) {
 
   }
 
+  Job.fetchUnapprovedJobs = function (
+    callback
+  ) {
+    Job.find({
+      filter: {
+        "isApproved" : false
+      }
+    }, callback)
+  }
+
   Job.afterRemote('postJob', function (ctx, instance, next) {
     Job.app.models.Activity.create({
       jobId: instance.id

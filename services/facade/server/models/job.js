@@ -181,6 +181,28 @@ module.exports = function (Job) {
     })
   }
 
+  Job.fetchUnapprovedJobs = function (
+    callback
+  ) {
+    // to be reviewed
+    Job.app.models.UserAccount.validateToken(accessToken, (err, session) => {
+      if (err) return callback(err)
+      else if(session){
+        const { user } = session
+        if(user.authAs === 'moderator') {
+          const { userId, moderatorprofile } = session // ???
+          console.log(session)
+            Job.Job_find({
+              filter: {
+                "isApproved" : false
+              }
+            }, callback)
+        }else{
+          callback(new Error('You must be logged in as MODERATOR to fetch jobs'), null)
+        }
+      }
+    })
+  }
 
   Job.fetchJobsBySkill = function (skillId, callback) {
     Job.Job_find({

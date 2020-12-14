@@ -204,6 +204,27 @@
         }
       ]
     },
+    "fetchUnapprovedJobs" : {
+      "accepts" : [
+        {
+          "arg": "access_token",
+          "type": "string",
+          "http": {
+            "source": "query"
+          }
+        }
+      ],
+      "returns" : {
+        "root": true
+      },
+      "description" : "helps fetch unapproved jobs",
+      "http" : [
+        {
+          "path": "/fetchUnapprovedJobs",
+          "verb": "get"
+        }
+      ]
+    },
     "approveJob": {
       "accepts": [
         {

@@ -164,6 +164,14 @@
       "description": "helps create job instances from outside (swagger)",
       "http": null
     },
+    "fetchUnapprovedJobs" : {
+      "accepts" : [],
+      "returns" : {
+        "root": true
+      },
+      "description" : "helps fetch unapproved jobs",
+      "http" : null
+    },
     "prototype.approve": {
       "accepts": [],
       "returns": {
