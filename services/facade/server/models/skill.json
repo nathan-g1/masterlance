@@ -28,6 +28,28 @@
         }
       ]
     },
+    "skillById": {
+      "accepts": [
+        {
+          "arg": "id",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "returns": [
+        {
+          "arg": "result",
+          "root": true
+        }
+      ],
+      "description": "fetches a skill model given an ID",
+      "http": [
+        {
+          "path": "/skill-by-id",
+          "verb": "get"
+        }
+      ]
+    },
     "searchForAvailableSkills": {
       "accepts": [
         {

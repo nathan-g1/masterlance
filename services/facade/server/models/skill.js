@@ -12,6 +12,18 @@ module.exports = function (Skill) {
             }
         })
     }
+    
+    Skill.skillById = function (id, callback) {
+        Skill.app.models.Core.Skill_findById({
+            id
+        }, (err, result) => {
+            if (err) {
+                callback(err.obj.error, null);
+            } else {
+                callback(null, result.obj);
+            }
+        })
+    }
 
     Skill.searchForAvailableSkills = function (query, callback) {
         if (query.length < 3) {
