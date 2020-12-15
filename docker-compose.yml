@@ -70,6 +70,18 @@ services:
       - auth-db
     links:
       - auth-db
+  im:
+    build: ./services/im
+    image: loopback-example-facade/im
+    ports:
+      - "3004:3000"
+    volumes:
+      - ./services/im:/usr/src/app
+    depends_on:
+      - im-db
+      - auth
+    links:
+      - im-db
   auth-db:
     image: mongo
     volumes:
