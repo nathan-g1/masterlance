@@ -226,18 +226,17 @@ module.exports = function (Job) {
   }
 
   Job.applyProposal = function (accessToken, jobId, body, price, duration, numberOfMilestones, callback) {
-    Job.app.models.AuthFreelancer.RoleResolver_resolveToken(
-      {
-        accessToken
-      },
-      (err, data) => {
-        if (err) { callback(err.obj.error, null) } else {
-          const userData = data.obj
-          if (userData.freelancerId) {
-            if (userData.restrictionsLeft >= 1) {
+    Job.app.models.UserAccount.validateToken(accessToken, (err, session) => {
+      if (err) return callback(err)
+      else if (session) {
+        const { user } = session
+        if (user.authAs === 'freelancer') {
+
+          if (user.freelancerprofile) {
+            if (user.restrictionsLeft >= 1) {
               Job.Job_prototype_applyProposal({
                 id: jobId,
-                body, price, duration: JSON.stringify(duration), numberOfMilestones, proposedBy: userData.freelancerId
+                body, price, duration: JSON.stringify(duration), numberOfMilestones: 1, proposedBy: user.freelancerprofile.id
               }, (err, data) => {
                 if (err) {
                   callback(err.obj.error, null);
@@ -254,7 +253,7 @@ module.exports = function (Job) {
           }
         }
       }
-    )
+    })
   }
 
   Job.approveJob = function (accessToken, jobId, callback) {
@@ -284,14 +283,12 @@ module.exports = function (Job) {
   }
 
   Job.proposals = function (accessToken, jobId, callback) {
-    Job.app.models.AuthClient.RoleResolver_resolveToken(
-      {
-        accessToken
-      },
-      (err, data) => {
-        if (err) { callback(err.obj.error, null) } else {
-          const userData = data.obj
-          if (userData.clientId) {
+    Job.app.models.UserAccount.validateToken(accessToken, (err, session) => {
+      if (err) return callback(err)
+      else if (session) {
+        const { user } = session
+        if (user.authAs === 'client' && user.clientprofile) {
+           
             Job.Job_findById({
               id: jobId.toString(),
               filter: JSON.stringify({
@@ -304,7 +301,7 @@ module.exports = function (Job) {
               if (err) {
                 callback(err.obj.error, null);
               } else {
-                if (data.obj.postedBy == userData.clientId.toString()) {
+                if (data.obj.postedBy == user.clientprofile.id.toString()) {
                   callback(null, data.obj);
                 } else {
                   callback(new Error("NOT authorized to see the proposals"), null);
@@ -314,9 +311,11 @@ module.exports = function (Job) {
           } else {
             callback(new Error('You must be logged in as the CLIENT user who posted the job'), null)
           }
-        }
+          
+      } else {
+        callback(new Error('unknown error'), null)
       }
-    )
+    })
   }
 
 
