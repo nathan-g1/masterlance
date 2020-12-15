@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 cd ./services/auth && npm i;
 cd ../im && npm i;
 cd ../core && npm i;

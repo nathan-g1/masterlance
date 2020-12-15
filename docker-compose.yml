@@ -37,9 +37,9 @@ services:
     build: ./services/transaction
     image: loopback-example-facade/transaction
     environment:
-      - PDT_TOKEN=pdt_token # YOUR_YENEPAY_PDT_TKEN
+      - PDT_TOKEN="VEzzj2vH8mKPde" # YOUR_YENEPAY_PDT_TKEN
       - FRONTEND_URL=http://localhost:8080
-      - SELLER_CODE=0123 # YOUR_YENEPAY_SELLER_CODE
+      - SELLER_CODE=0694 # YOUR_YENEPAY_SELLER_CODE
     ports:
       - "3003:3000"
     volumes:
