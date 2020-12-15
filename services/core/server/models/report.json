@@ -32,6 +32,64 @@
       
     },
     "acls": [],
-    "methods": {}
+    "methods": {
+        "fetchRecentReports" : {
+            "accepts" : [],
+            "returns" : {
+              "root": true
+            },
+            "description" : "helps fetch recent reports",
+            "http": [
+                {
+                  "path": "/fetchReports",
+                  "verb": "get"
+                }
+              ]
+          },
+        "createReport": {
+            "accepts" : [
+                {
+                    "arg": "JobId",
+                    "type": "string"
+                },
+                {
+                    "arg": "Flag",
+                    "type": "string"
+                }
+            ],
+            "returns" : {
+              "root": true
+            },
+            "description" : "helps to create a report",
+            "http": [
+                {
+                  "path": "/createJob",
+                  "verb": "post"
+                }
+              ]
+        },
+        "flagReportedJob": {
+            "accepts": [
+                {
+                    "arg": "JobId",
+                    "type": "string"
+                },
+                {
+                    "arg": "Flag",
+                    "type": "string"
+                }
+            ],
+            "returns" : {
+                "root": true
+            },
+            "description" : "helps to flag a report",
+            "http": [
+                {
+                    "path": "/flagJob",
+                    "verb": "post"
+                }
+            ]
+        }
+    }
   }
   
