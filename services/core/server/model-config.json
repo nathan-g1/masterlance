@@ -38,6 +38,10 @@
     "dataSource": "mongoService",
     "public": true
   },
+  "Report": {
+    "dataSource": "mongoService",
+    "public":true
+  },
   "Proposal": {
     "dataSource": "mongoService",
     "public": true
