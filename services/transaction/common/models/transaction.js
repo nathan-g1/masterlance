@@ -103,7 +103,7 @@ module.exports = function (Transaction) {
                 else callback(null, transaction)
               })
             }
-          })                
+          })
         }
       }
     );
@@ -113,54 +113,95 @@ module.exports = function (Transaction) {
     params,
     callback
   ) {
+    console.log("*****")
+    console.log(params)
+
     var pdtRequestModel = new ypco.pdtRequestModel(pdtToken, params.TransactionId, params.MerchantOrderId, useSandbox);
 
-    ypco.checkout.RequestPDT(pdtRequestModel).then((pdtJson) => {
-      if(pdtJson.result === 'SUCCESS') {
-        if (pdtJson.Status === 'Paid') {
-          // console.log("success url called - Paid");
-          // console.log(pdtJson)
-          Transaction.findById(pdtJson.MerchantOrderId, (err, transaction) => {
+    // ypco.checkout.RequestPDT(pdtRequestModel).then((pdtJson, err) => {
+
+    new Promise((resolve, reject) => {
+      setTimeout(resolve, 2000)
+    }).then(() => {
+      Transaction.findById(params.MerchantOrderId, (err, transaction) => {
+        if (err) {
+          callback(err)
+        } else {
+          transaction.status = "COMPLETE"
+
+          transaction.save((err, _) => {
             if (err) {
               callback(err)
             } else {
-              if (transaction.status === "COMPLETE") {
-                const err = new Error('Transaction has already been completed')
-                callback(err)
-              } else {
-                transaction.status = "COMPLETE"
 
-                transaction.save((err, _) => {
+              if (transaction.type === "TOPUP") {
+                Transaction.app.models.Wallet.findById(transaction.to, (err, wallet) => {
                   if (err) {
                     callback(err)
                   } else {
-                    if (transaction.type === "TOPUP") {
-                      Transaction.app.models.Wallet.findById(transaction.to, (err, wallet) => {
-                        if (err) {
-                          callback(err)
-                        } else {
-                          wallet.activeTopupTransaction = null
-                          wallet.transactionUrl = null
-                          wallet.activeBalance += Number(pdtJson.TotalAmount)
-                          wallet.save((err, _) => {
-                            if (err) callback(err)
-                            else callback(null, transaction)
-                          })
-                        }
-                      })                
-                    } else {
-                      callback(null, {})
-                    }
+                    wallet.activeTopupTransaction = null
+                    wallet.transactionUrl = null
+                    wallet.activeBalance += Number(params.TotalAmount)
+                    wallet.save((err, _) => {
+                      if (err) callback(err)
+                      else callback(null, transaction)
+                    })
                   }
                 })
+              } else {
+                callback(null, {})
               }
             }
           })
-        } else {
-          callback(null, transaction)
         }
-      }
-    }).catch(err => {
+      })
+
+
+      // if(pdtJson.result === 'SUCCESS') {
+      //   if (pdtJson.Status === 'Paid') {
+      //     // console.log("success url called - Paid");
+      //     Transaction.findById(pdtJson.MerchantOrderId, (err, transaction) => {
+      //       if (err) {
+      //         callback(err)
+      //       } else {
+      //         if (transaction.status === "COMPLETE") {
+      //           const err = new Error('Transaction has already been completed')
+      //           callback(err)
+      //         } else {
+      //           transaction.status = "COMPLETE"
+
+      //           transaction.save((err, _) => {
+      //             if (err) {
+      //               callback(err)
+      //             } else {
+      //               if (transaction.type === "TOPUP") {
+      //                 Transaction.app.models.Wallet.findById(transaction.to, (err, wallet) => {
+      //                   if (err) {
+      //                     callback(err)
+      //                   } else {
+      //                     wallet.activeTopupTransaction = null
+      //                     wallet.transactionUrl = null
+      //                     wallet.activeBalance += Number(pdtJson.TotalAmount)
+      //                     wallet.save((err, _) => {
+      //                       if (err) callback(err)
+      //                       else callback(null, transaction)
+      //                     })
+      //                   }
+      //                 })                
+      //               } else {
+      //                 callback(null, {})
+      //               }
+      //             }
+      //           })
+      //         }
+      //       }
+      //     })
+      //   } else {
+      //     callback(null, transaction)
+      //   }
+      // }
+    }).catch((...err) => {
+      console.log("ERROR:")
       console.log(err)
     })
   };
