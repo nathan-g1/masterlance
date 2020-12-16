@@ -42,6 +42,34 @@
         "verb": "get"
       }
     },
+    "haveIApplied": {
+      "accepts": [
+        {
+          "arg": "access_token",
+          "type": "string",
+          "required": true,
+          "http": {
+            "source": "query"
+          }
+        },
+        {
+          "arg": "jobId",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "returns": {
+        "root": true,
+        "description": ""
+      },
+      "description": "",
+      "http": [
+        {
+          "path": "/:jobId/have-i-applied",
+          "verb": "post"
+        }
+      ]
+    },
     "feed": {
       "accepts": [
         {

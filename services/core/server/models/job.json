@@ -3,7 +3,8 @@
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
-    "validateUpsert": true
+    "validateUpsert": true,
+    "strictObjectIDCoercion": true
   },
   "mixins": {
     "TimeStamp": true
@@ -122,6 +123,21 @@
         "description": ""
       },
       "description": "helps link skill and job models from outside (swagger)",
+      "http": null
+    },
+    "prototype.haveIApplied": {
+      "accepts": [
+        {
+          "arg": "proposedBy",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "returns": {
+        "root": true,
+        "description": ""
+      },
+      "description": "",
       "http": null
     },
     "postJob": {

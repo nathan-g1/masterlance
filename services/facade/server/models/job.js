@@ -225,6 +225,29 @@ module.exports = function (Job) {
     })
   }
 
+  Job.haveIApplied = function(accessToken, jobId, callback) {
+    Job.app.models.UserAccount.validateToken(accessToken, (err, session) => {
+      if (err) return callback(err)
+      else if (session) {
+        const { user } = session
+        if (user.authAs === 'freelancer') {
+
+          if (user.freelancerprofile) {
+            Job.Job_prototype_haveIApplied({
+              id: jobId,
+              proposedBy: user.freelancerprofile.id
+            }, (err, data) => {
+              if (err) {
+                callback(err.obj.error, null);
+              } else {
+                callback(null, data.obj);
+              }
+            })
+          }
+        }
+      }
+    })
+  }
   Job.applyProposal = function (accessToken, jobId, body, price, duration, numberOfMilestones, callback) {
     Job.app.models.UserAccount.validateToken(accessToken, (err, session) => {
       if (err) return callback(err)

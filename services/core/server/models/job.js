@@ -81,13 +81,13 @@ module.exports = function (Job) {
   Job.prototype.applyProposal = function (body, price, duration, numberOfMilestones, proposedBy, callback) {
 
     Job.app.models.Proposal.findOne({
-      jobId: this.id,
-      filter: {
-        where: {
-          proposedBy
-        }
+      where: {
+        jobId: this.id,
+        proposedBy  
       }
     }, (err, data) => {
+      console.log(data);
+      console.log(this.id)
       if (data) {
         callback(new Error('You have already applied on this job'), null);
       } else {
@@ -107,6 +107,26 @@ module.exports = function (Job) {
             })
           }
         })
+      }
+    })
+  }
+
+  Job.prototype.haveIApplied = function (proposedBy, callback) {
+
+    Job.app.models.Proposal.findOne({
+      where: {
+        jobId: this.id,
+        proposedBy  
+      }
+    }, (err, data) => {
+      console.log(data)
+      if (err) callback(err);
+      else {
+        if (data) {
+          callback(null, {result: true});
+        } else {
+          callback(null, {result: false});
+        }
       }
     })
   }
